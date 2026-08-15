@@ -38,7 +38,6 @@
   button{ font-family:inherit; cursor:pointer; border:none; }
   img{ max-width:100%; display:block; }
 
-  /* ---------- star divider signature ---------- */
   .star-divider{
     height:22px;
     background-image: radial-gradient(var(--copper) 1.6px, transparent 1.8px);
@@ -49,7 +48,6 @@
   }
   .star-divider.thin{ opacity:.35; height:14px; background-size:20px 14px; }
 
-  /* ---------- header ---------- */
   header{
     position:sticky; top:0; z-index:50;
     background:var(--teal);
@@ -85,13 +83,11 @@
     .burger{ display:block; }
   }
 
-  /* ---------- page container ---------- */
   main{ max-width:1180px; margin:0 auto; padding:0 24px; }
   section.page{ display:none; }
   section.page.active{ display:block; animation:fadein .35s ease; }
   @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 
-  /* ---------- hero ---------- */
   .hero{
     background:
       radial-gradient(circle at 12% 20%, rgba(198,138,52,.18), transparent 40%),
@@ -133,7 +129,6 @@
   .stat b{ display:block; font-size:26px; color:var(--copper); font-family:'Amiri',serif; }
   .stat span{ font-size:13px; color:var(--teal-pale); }
 
-  /* ---------- section headings ---------- */
   .section-head{
     display:flex; align-items:baseline; justify-content:space-between; margin:52px 0 20px;
   }
@@ -146,10 +141,8 @@
   .eyebrow.c-store{ color:var(--teal); } .eyebrow.c-market{ color:var(--clay); }
   .eyebrow.c-estate{ color:var(--stone); } .eyebrow.c-cars{ color:var(--copper); }
 
-  /* ---------- category / vertical showcase (home) ---------- */
   .vertical-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:10px; }
-  @media(max-width:900px){ .vertical-grid{ grid-template-columns:repeat(2,1fr); } }
-  @media(max-width:520px){ .vertical-grid{ grid-template-columns:1fr; } }
+  @media(max-width:900px){ .vertical-grid{ grid-template-columns:repeat(2,1fr); gap:12px; } }
   .v-card{
     border-radius:var(--radius-arch); padding:28px 20px 22px; text-align:center;
     color:var(--white); position:relative; overflow:hidden; transition:.25s transform;
@@ -163,11 +156,9 @@
   .v-card.estate{ background:linear-gradient(160deg,var(--stone),#6e5a3f); }
   .v-card.cars{ background:linear-gradient(160deg,var(--copper),#a5701f); }
 
-  /* ---------- generic grid + card ---------- */
   .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
   @media(max-width:980px){ .grid{ grid-template-columns:repeat(3,1fr); } }
-  @media(max-width:720px){ .grid{ grid-template-columns:repeat(2,1fr); } }
-  @media(max-width:480px){ .grid{ grid-template-columns:1fr; } }
+  @media(max-width:720px){ .grid{ grid-template-columns:repeat(2,1fr); gap:12px; } }
 
   .card{
     background:var(--white); border-radius:14px; overflow:hidden;
@@ -205,7 +196,6 @@
   .card .cta.estate{ background:var(--stone); } .card .cta.estate:hover{ background:#75613f; }
   .card .cta.cars{ background:var(--copper); color:var(--charcoal); } .card .cta.cars:hover{ background:#b57a28; }
 
-  /* ---------- filter bar ---------- */
   .page-hero{
     padding:34px 0 6px;
   }
@@ -227,7 +217,6 @@
   }
   .empty-state .icon{ font-size:40px; margin-bottom:10px; }
 
-  /* ---------- footer ---------- */
   footer{ background:var(--charcoal); color:var(--cream-dark); margin-top:70px; }
   .footer-inner{
     max-width:1180px; margin:0 auto; padding:44px 24px 20px;
@@ -243,7 +232,6 @@
     text-align:center; padding:16px; font-size:12.5px; color:#8a8071; border-top:1px solid #453d30;
   }
 
-  /* ---------- floating sell button (mobile) ---------- */
   .float-sell{
     position:fixed; bottom:20px; left:20px; z-index:60;
     background:var(--clay); color:var(--white); padding:14px 22px; border-radius:30px;
@@ -251,7 +239,45 @@
   }
   @media(max-width:900px){ .float-sell{ display:block; } }
 
-  /* ---------- modal ---------- */
+  @media(max-width:480px){
+    .hero{ padding:44px 16px 36px; }
+    .hero h1{ font-size:26px; }
+    .hero p.sub{ font-size:15px; }
+    .search-bar{ flex-direction:column; border-radius:12px; margin-top:22px; }
+    .search-bar select{ border-left:none; border-bottom:1px solid #ddd0b3; padding:12px 14px; }
+    .search-bar input{ padding:13px 14px; }
+    .search-bar button{ padding:13px; }
+    .stats-row{ gap:22px 28px; margin-top:28px; }
+    .stat b{ font-size:20px; }
+    .stat span{ font-size:11.5px; }
+    .chips{ gap:7px; }
+    .chip{ padding:6px 12px; font-size:12.5px; }
+
+    main{ padding:0 14px; }
+    .section-head{ margin:36px 0 14px; }
+    .section-head h2{ font-size:20px; }
+    .section-head a.more{ font-size:12.5px; }
+
+    .vertical-grid, .grid{ gap:10px; }
+    .v-card{ padding:18px 10px 14px; border-radius:60px 60px 10px 10px; }
+    .v-card .icon{ font-size:24px; margin-bottom:6px; }
+    .v-card h3{ font-size:14px; }
+    .v-card p{ font-size:11px; }
+
+    .card .thumb{ height:88px; margin:8px 8px 0; border-radius:60px 60px 10px 10px; font-size:26px; }
+    .card .body{ padding:10px 10px 12px; gap:4px; }
+    .card h4{ font-size:13px; }
+    .card .meta{ font-size:11px; }
+    .price{ font-size:15px; }
+    .badge{ font-size:10px; padding:2px 7px; }
+    .card .cta{ margin:0 10px 10px; padding:8px; font-size:12px; }
+
+    .page-hero{ padding:26px 0 4px; }
+    .page-hero h2{ font-size:22px; }
+    .filters{ padding:10px; gap:8px; }
+    .filters select, .filters input{ font-size:13px; padding:9px 10px; }
+  }
+
   .overlay{
     position:fixed; inset:0; background:rgba(42,36,29,.55); z-index:100;
     display:none; align-items:center; justify-content:center; padding:20px;
@@ -278,7 +304,6 @@
   }
   .modal .submit:hover{ background:var(--teal-light); }
 
-  /* toast */
   .toast{
     position:fixed; bottom:26px; right:26px; background:var(--charcoal); color:var(--cream);
     padding:14px 20px; border-radius:10px; font-size:14px; z-index:200; box-shadow:0 8px 24px rgba(0,0,0,.3);
@@ -313,7 +338,6 @@
 
 <main>
 
-  <!-- ===================== HOME ===================== -->
   <section class="page active" id="page-home">
     <div class="hero" style="border-radius:0 0 26px 26px;">
       <div class="hero-inner">
@@ -387,7 +411,6 @@
     <div class="star-divider" style="margin-top:50px;"></div>
   </section>
 
-  <!-- ===================== STORE ===================== -->
   <section class="page" id="page-store">
     <div class="page-hero">
       <span class="eyebrow c-store">المتجر الإلكتروني</span>
@@ -415,7 +438,6 @@
     <div class="grid" id="storeGrid"></div>
   </section>
 
-  <!-- ===================== MARKET ===================== -->
   <section class="page" id="page-market">
     <div class="page-hero">
       <span class="eyebrow c-market">سوق الاستخدام</span>
@@ -442,7 +464,6 @@
     <div class="grid" id="marketGrid"></div>
   </section>
 
-  <!-- ===================== ESTATE ===================== -->
   <section class="page" id="page-estate">
     <div class="page-hero">
       <span class="eyebrow c-estate">عقارات</span>
@@ -469,7 +490,6 @@
     <div class="grid" id="estateGrid"></div>
   </section>
 
-  <!-- ===================== CARS ===================== -->
   <section class="page" id="page-cars">
     <div class="page-hero">
       <span class="eyebrow c-cars">سيارات</span>
@@ -529,7 +549,6 @@
   <div class="footer-bottom">هاد نموذج أولي تجريبي — بسطة © 2026</div>
 </footer>
 
-<!-- ===================== POST-AD MODAL ===================== -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-head">
@@ -564,7 +583,6 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* ================= DATA ================= */
 const storeProducts = [
   {name:"سماعة بلوتوث JBL", cat:"إلكترونيات", price:850000, vendor:"متجر التقنية", icon:"🎧"},
   {name:"فستان سهرة نسائي", cat:"أزياء", price:620000, vendor:"بوتيك لمسة", icon:"👗"},
@@ -609,7 +627,6 @@ const carsListings = [
   {title:"سكودا أوكتافيا 2020", brand:"سكودا", year:2020, km:"33,000", trans:"أوتوماتيك", city:"دمشق", price:230000000, icon:"🚙"},
 ];
 
-/* ================= HELPERS ================= */
 const fmt = n => n.toLocaleString('en-US') + " ل.س";
 
 function storeCard(p){
@@ -664,13 +681,11 @@ function emptyState(msg){
   return `<div class="empty-state" style="grid-column:1/-1;"><div class="icon">🔎</div><p>${msg}</p></div>`;
 }
 
-/* ================= HOME PREVIEWS ================= */
 document.getElementById('homeStoreGrid').innerHTML = storeProducts.slice(0,4).map(storeCard).join('');
 document.getElementById('homeMarketGrid').innerHTML = marketAds.slice(0,4).map(marketCard).join('');
 document.getElementById('homeEstateGrid').innerHTML = estateListings.slice(0,4).map(estateCard).join('');
 document.getElementById('homeCarsGrid').innerHTML = carsListings.slice(0,4).map(carCard).join('');
 
-/* ================= STORE PAGE ================= */
 function renderStore(){
   const cat = document.getElementById('storeCategory').value;
   const sort = document.getElementById('storeSort').value;
@@ -686,7 +701,6 @@ function renderStore(){
 ['storeCategory','storeSort'].forEach(id=>document.getElementById(id).addEventListener('change', renderStore));
 document.getElementById('storeSearch').addEventListener('input', renderStore);
 
-/* ================= MARKET PAGE ================= */
 function renderMarket(){
   const cat = document.getElementById('marketCategory').value;
   const city = document.getElementById('marketCity').value;
@@ -700,7 +714,6 @@ function renderMarket(){
 ['marketCategory','marketCity'].forEach(id=>document.getElementById(id).addEventListener('change', renderMarket));
 document.getElementById('marketSearch').addEventListener('input', renderMarket);
 
-/* ================= ESTATE PAGE ================= */
 function renderEstate(){
   const type = document.getElementById('estateType').value;
   const purpose = document.getElementById('estatePurpose').value;
@@ -716,7 +729,6 @@ function renderEstate(){
 ['estateType','estatePurpose','estateCity'].forEach(id=>document.getElementById(id).addEventListener('change', renderEstate));
 document.getElementById('estateSearch').addEventListener('input', renderEstate);
 
-/* ================= CARS PAGE ================= */
 function renderCars(){
   const brand = document.getElementById('carsBrand').value;
   const city = document.getElementById('carsCity').value;
@@ -733,10 +745,8 @@ function renderCars(){
 ['carsBrand','carsCity','carsSort'].forEach(id=>document.getElementById(id).addEventListener('change', renderCars));
 document.getElementById('carsSearch').addEventListener('input', renderCars);
 
-/* first render */
 renderStore(); renderMarket(); renderEstate(); renderCars();
 
-/* ================= NAVIGATION ================= */
 function goTo(page){
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
@@ -751,12 +761,10 @@ document.getElementById('burgerBtn').addEventListener('click', () => {
   document.getElementById('mainNav').classList.toggle('open');
 });
 
-/* home search bar routes to relevant section */
 document.getElementById('homeSearchBtn').addEventListener('click', () => {
   goTo(document.getElementById('homeSearchScope').value);
 });
 
-/* ================= MODAL ================= */
 const overlay = document.getElementById('overlay');
 function openModal(){ overlay.classList.add('open'); }
 function closeModal(){ overlay.classList.remove('open'); }
@@ -765,7 +773,6 @@ document.getElementById('sellBtnFloat').addEventListener('click', openModal);
 document.getElementById('closeModal').addEventListener('click', closeModal);
 overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
 
-/* ================= TOAST ================= */
 const toast = document.getElementById('toast');
 function showToast(msg){
   toast.textContent = msg;
