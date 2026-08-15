@@ -276,6 +276,10 @@
     .page-hero h2{ font-size:22px; }
     .filters{ padding:10px; gap:8px; }
     .filters select, .filters input{ font-size:13px; padding:9px 10px; }
+
+    .product-modal{ max-width:100%; }
+    .pm-main-image{ font-size:56px; }
+    .pm-price{ font-size:22px; }
   }
 
   .overlay{
@@ -303,6 +307,51 @@
     font-weight:700; font-size:15px; margin-top:6px;
   }
   .modal .submit:hover{ background:var(--teal-light); }
+
+  .product-modal{ max-width:840px; }
+  .pm-body{ display:grid; grid-template-columns:1.1fr 1fr; gap:26px; }
+  @media(max-width:680px){ .pm-body{ grid-template-columns:1fr; } }
+
+  .pm-main-image{
+    position:relative; aspect-ratio:1/1; border-radius:16px; overflow:hidden;
+    display:flex; align-items:center; justify-content:center; font-size:76px;
+  }
+  .pm-nav{
+    position:absolute; top:50%; transform:translateY(-50%); width:38px; height:38px; border-radius:50%;
+    background:rgba(255,252,246,.9); color:var(--charcoal); font-size:22px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.15); z-index:2;
+  }
+  .pm-nav:hover{ background:var(--white); }
+  .pm-nav.prev{ right:12px; }
+  .pm-nav.next{ left:12px; }
+  .pm-dots{ position:absolute; bottom:12px; left:0; right:0; display:flex; justify-content:center; gap:6px; }
+  .pm-dots span{ width:6px; height:6px; border-radius:50%; background:rgba(42,36,29,.25); }
+  .pm-dots span.active{ background:var(--charcoal); width:16px; border-radius:4px; transition:.2s; }
+
+  .pm-thumbs{ display:flex; gap:8px; margin-top:10px; overflow-x:auto; padding-bottom:4px; }
+  .pm-thumb{
+    width:58px; height:58px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-size:22px; cursor:pointer; border:2px solid transparent; transition:.15s;
+  }
+  .pm-thumb.active{ border-color:var(--copper); }
+  .pm-thumb:hover{ border-color:var(--cream-dark); }
+
+  .pm-info{ display:flex; flex-direction:column; }
+  .pm-info .badge{ width:fit-content; margin-bottom:10px; }
+  .pm-price{ font-family:'Amiri',serif; font-size:27px; font-weight:700; color:var(--teal); margin-bottom:6px; }
+  .pm-vendor{ font-size:13.5px; color:var(--charcoal-soft); margin-bottom:14px; }
+  .pm-desc{ font-size:14px; line-height:1.85; color:var(--charcoal-soft); margin-bottom:20px; }
+  .pm-qty{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .pm-qty label{ font-size:13.5px; font-weight:700; }
+  .qty-stepper{ display:flex; align-items:center; border:1.5px solid var(--cream-dark); border-radius:8px; overflow:hidden; }
+  .qty-stepper button{ width:36px; height:36px; background:var(--cream); font-size:18px; color:var(--charcoal); }
+  .qty-stepper button:hover{ background:var(--cream-dark); }
+  .qty-stepper span{ width:42px; text-align:center; font-weight:700; font-size:14px; }
+  .pm-add-cart{
+    margin-top:auto; width:100%; padding:14px; border-radius:10px; background:var(--teal); color:var(--white);
+    font-weight:700; font-size:15px;
+  }
+  .pm-add-cart:hover{ background:var(--teal-light); }
 
   .toast{
     position:fixed; bottom:26px; right:26px; background:var(--charcoal); color:var(--cream);
@@ -580,22 +629,57 @@
   </div>
 </div>
 
+<div class="overlay" id="productOverlay">
+  <div class="modal product-modal">
+    <div class="modal-head">
+      <h3 id="pmTitle">اسم المنتج</h3>
+      <button id="closeProductModal">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-gallery">
+        <div class="pm-main-image t-store" id="pmMainImage">
+          <button class="pm-nav prev" id="pmPrev">‹</button>
+          <span id="pmMainIcon"></span>
+          <button class="pm-nav next" id="pmNext">›</button>
+          <div class="pm-dots" id="pmDots"></div>
+        </div>
+        <div class="pm-thumbs" id="pmThumbs"></div>
+      </div>
+      <div class="pm-info">
+        <span class="badge store" id="pmCategory"></span>
+        <div class="pm-price" id="pmPrice"></div>
+        <div class="pm-vendor" id="pmVendor"></div>
+        <p class="pm-desc" id="pmDesc"></p>
+        <div class="pm-qty">
+          <label>الكمية</label>
+          <div class="qty-stepper">
+            <button id="qtyMinus" type="button">−</button>
+            <span id="qtyValue">1</span>
+            <button id="qtyPlus" type="button">+</button>
+          </div>
+        </div>
+        <button class="pm-add-cart" id="pmAddCart">أضف للسلة 🛒</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 const storeProducts = [
-  {name:"سماعة بلوتوث JBL", cat:"إلكترونيات", price:850000, vendor:"متجر التقنية", icon:"🎧"},
-  {name:"فستان سهرة نسائي", cat:"أزياء", price:620000, vendor:"بوتيك لمسة", icon:"👗"},
-  {name:"طقم أواني طهي 12 قطعة", cat:"منزل ومطبخ", price:1450000, vendor:"بيت الضيافة", icon:"🍳"},
-  {name:"كريم عناية بالبشرة", cat:"جمال وعناية", price:310000, vendor:"صيدلية النور", icon:"🧴"},
-  {name:"لعبة تركيب أطفال", cat:"أطفال", price:275000, vendor:"عالم الطفولة", icon:"🧸"},
-  {name:"دراجة رياضية", cat:"رياضة", price:2100000, vendor:"سبورت زون", icon:"🚲"},
-  {name:"موبايل سامسونج A54", cat:"إلكترونيات", price:5200000, vendor:"متجر التقنية", icon:"📱"},
-  {name:"حذاء رياضي رجالي", cat:"أزياء", price:540000, vendor:"ستايل هاوس", icon:"👟"},
-  {name:"غلاية كهربائية", cat:"منزل ومطبخ", price:390000, vendor:"بيت الضيافة", icon:"☕"},
-  {name:"عطر رجالي فاخر", cat:"جمال وعناية", price:780000, vendor:"صيدلية النور", icon:"🧪"},
-  {name:"عربة أطفال", cat:"أطفال", price:1900000, vendor:"عالم الطفولة", icon:"🍼"},
-  {name:"طاولة بينغ بونغ", cat:"رياضة", price:3100000, vendor:"سبورت زون", icon:"🏓"},
+  {name:"سماعة بلوتوث JBL", cat:"إلكترونيات", price:850000, vendor:"متجر التقنية", icon:"🎧", images:["🎧","📦","🔋","🎵"], desc:"سماعة لاسلكية بصوت نقي وبيس قوي، مقاومة للماء، وبطارية بتدوم طول اليوم ع شحنة وحدة. مريحة للاستخدام الطويل ومناسبة للرياضة والمشاوير."},
+  {name:"فستان سهرة نسائي", cat:"أزياء", price:620000, vendor:"بوتيك لمسة", icon:"👗", images:["👗","✂️","🧵","👛"], desc:"فستان سهرة أنيق بقصة عصرية وقماش مريح، متوفر بمقاسات مختلفة. مناسب للمناسبات والأفراح."},
+  {name:"طقم أواني طهي 12 قطعة", cat:"منزل ومطبخ", price:1450000, vendor:"بيت الضيافة", icon:"🍳", images:["🍳","🥘","🍲","📦"], desc:"طقم أواني طهي كامل من ستانلس ستيل عالي الجودة، مقاوم للخدش وموزّع للحرارة بالتساوي. يشمل كل مقاسات الطبخ اليومي."},
+  {name:"كريم عناية بالبشرة", cat:"جمال وعناية", price:310000, vendor:"صيدلية النور", icon:"🧴", images:["🧴","✨","🌿","📦"], desc:"كريم مرطب يومي بتركيبة طبيعية، مناسب لكل أنواع البشرة، بيمتص بسرعة وبيترك البشرة ناعمة طول اليوم."},
+  {name:"لعبة تركيب أطفال", cat:"أطفال", price:275000, vendor:"عالم الطفولة", icon:"🧸", images:["🧸","🧩","📦","🎨"], desc:"لعبة تركيب تعليمية آمنة ومصنوعة من مواد غير سامة، بتنمّي مهارات التفكير والتركيز عند الأطفال."},
+  {name:"دراجة رياضية", cat:"رياضة", price:2100000, vendor:"سبورت زون", icon:"🚲", images:["🚲","⚙️","🛞","🎽"], desc:"دراجة هوائية بإطار خفيف ومتين، مناسبة للاستخدام اليومي والطرقات الجبلية، فرامل قوية وتعليق مريح."},
+  {name:"موبايل سامسونج A54", cat:"إلكترونيات", price:5200000, vendor:"متجر التقنية", icon:"📱", images:["📱","📷","🔋","📦"], desc:"موبايل بكاميرا احترافية وشاشة AMOLED واضحة، ذاكرة كبيرة وبطارية بتدوم يوم كامل استخدام عادي."},
+  {name:"حذاء رياضي رجالي", cat:"أزياء", price:540000, vendor:"ستايل هاوس", icon:"👟", images:["👟","👞","📦","✨"], desc:"حذاء رياضي مريح للمشي الطويل، نعل مطاطي مانع للانزلاق، متوفر بمقاسات وألوان متعددة."},
+  {name:"غلاية كهربائية", cat:"منزل ومطبخ", price:390000, vendor:"بيت الضيافة", icon:"☕", images:["☕","💧","⚡","📦"], desc:"غلاية كهربائية سريعة الغلي بإيقاف تلقائي، سعة تكفي العائلة، وتصميم آمن وسهل التنظيف."},
+  {name:"عطر رجالي فاخر", cat:"جمال وعناية", price:780000, vendor:"صيدلية النور", icon:"🧪", images:["🧪","🌸","📦","✨"], desc:"عطر رجالي بثبات طويل ورائحة مميزة، عبوة أنيقة مناسبة كهدية أو للاستخدام اليومي."},
+  {name:"عربة أطفال", cat:"أطفال", price:1900000, vendor:"عالم الطفولة", icon:"🍼", images:["🍼","👶","🛞","📦"], desc:"عربة أطفال قابلة للطي بسهولة، مقعد مريح قابل للتعديل، وعجلات ثابتة بمساكات جيدة."},
+  {name:"طاولة بينغ بونغ", cat:"رياضة", price:3100000, vendor:"سبورت زون", icon:"🏓", images:["🏓","📏","🎯","📦"], desc:"طاولة بينغ بونغ قابلة للطي والنقل، سطح احترافي بمواصفات قياسية، مناسبة للمنزل والنادي."},
 ];
 
 const marketAds = [
@@ -629,8 +713,79 @@ const carsListings = [
 
 const fmt = n => n.toLocaleString('en-US') + " ل.س";
 
+let pmState = { product: null, imgIndex: 0, qty: 1 };
+const productOverlay = document.getElementById('productOverlay');
+
+function openProductModal(name){
+  const p = storeProducts.find(x => x.name === name);
+  if(!p) return;
+  pmState = { product: p, imgIndex: 0, qty: 1 };
+  document.getElementById('pmTitle').textContent = p.name;
+  document.getElementById('pmCategory').textContent = p.cat;
+  document.getElementById('pmPrice').textContent = fmt(p.price);
+  document.getElementById('pmVendor').textContent = 'البائع: ' + p.vendor;
+  document.getElementById('pmDesc').textContent = p.desc;
+  document.getElementById('qtyValue').textContent = '1';
+  renderGallery();
+  productOverlay.classList.add('open');
+}
+function closeProductModal(){
+  productOverlay.classList.remove('open');
+}
+function renderGallery(){
+  const p = pmState.product;
+  document.getElementById('pmMainIcon').textContent = p.images[pmState.imgIndex];
+  document.getElementById('pmThumbs').innerHTML = p.images.map((img, i) =>
+    `<div class="pm-thumb t-store ${i === pmState.imgIndex ? 'active' : ''}" onclick="pmSetImage(${i})">${img}</div>`
+  ).join('');
+  document.getElementById('pmDots').innerHTML = p.images.map((_, i) =>
+    `<span class="${i === pmState.imgIndex ? 'active' : ''}"></span>`
+  ).join('');
+}
+function pmChangeImage(dir){
+  const p = pmState.product;
+  pmState.imgIndex = (pmState.imgIndex + dir + p.images.length) % p.images.length;
+  renderGallery();
+}
+function pmSetImage(i){
+  pmState.imgIndex = i;
+  renderGallery();
+}
+document.getElementById('pmPrev').addEventListener('click', () => pmChangeImage(-1));
+document.getElementById('pmNext').addEventListener('click', () => pmChangeImage(1));
+document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
+productOverlay.addEventListener('click', e => { if(e.target === productOverlay) closeProductModal(); });
+document.addEventListener('keydown', e => {
+  if(!productOverlay.classList.contains('open')) return;
+  if(e.key === 'Escape') closeProductModal();
+  if(e.key === 'ArrowLeft') pmChangeImage(-1);
+  if(e.key === 'ArrowRight') pmChangeImage(1);
+});
+document.getElementById('qtyMinus').addEventListener('click', () => {
+  pmState.qty = Math.max(1, pmState.qty - 1);
+  document.getElementById('qtyValue').textContent = pmState.qty;
+});
+document.getElementById('qtyPlus').addEventListener('click', () => {
+  pmState.qty = Math.min(99, pmState.qty + 1);
+  document.getElementById('qtyValue').textContent = pmState.qty;
+});
+document.getElementById('pmAddCart').addEventListener('click', () => {
+  showToast(`✅ تمت إضافة ${pmState.qty} × ${pmState.product.name} للسلة`);
+});
+
+(function(){
+  let touchStartX = 0;
+  const mainImg = document.getElementById('pmMainImage');
+  mainImg.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; });
+  mainImg.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(diff) < 40) return;
+    diff > 0 ? pmChangeImage(-1) : pmChangeImage(1);
+  });
+})();
+
 function storeCard(p){
-  return `<div class="card">
+  return `<div class="card" onclick="openProductModal('${p.name.replace(/'/g,"\\'")}')">
     <div class="thumb t-store">${p.icon}</div>
     <div class="body">
       <span class="badge store">${p.cat}</span>
@@ -638,7 +793,7 @@ function storeCard(p){
       <span class="meta">البائع: ${p.vendor}</span>
       <span class="price">${fmt(p.price)}</span>
     </div>
-    <div class="cta">أضف للسلة</div>
+    <div class="cta">عرض التفاصيل</div>
   </div>`;
 }
 function marketCard(a){
