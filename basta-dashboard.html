@@ -25,7 +25,6 @@
   button{ font-family:inherit; cursor:pointer; border:none; }
   select,input,textarea{ font-family:inherit; }
 
-  /* ---------- topbar ---------- */
   .topbar{
     background:var(--teal); color:var(--white); padding:12px 22px;
     display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:60;
@@ -47,7 +46,6 @@
     display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;
   }
 
-  /* ---------- layout ---------- */
   .layout{ display:flex; min-height:calc(100vh - 58px); }
   .sidebar{
     width:var(--sidebar-w); background:var(--white); border-left:1px solid var(--cream-dark);
@@ -68,7 +66,6 @@
   .page-title{ margin-bottom:4px; font-size:24px; }
   .page-sub{ color:var(--charcoal-soft); font-size:14px; margin-bottom:24px; }
 
-  /* ---------- stat cards ---------- */
   .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px; }
   @media(max-width:900px){ .stats{ grid-template-columns:repeat(2,1fr); } }
   .stat-card{
@@ -80,18 +77,15 @@
   .stat-card .value{ font-family:'Amiri',serif; font-size:28px; font-weight:700; }
   .stat-card .delta{ font-size:12px; color:var(--green); margin-top:4px; }
 
-  /* ---------- panels/cards ---------- */
   .panel{ background:var(--white); border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(42,36,29,.06); margin-bottom:24px; }
   .panel h3{ font-size:17px; margin-bottom:14px; }
 
-  /* ---------- bar chart (css) ---------- */
   .bar-row{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
   .bar-row .bar-label{ width:110px; font-size:13.5px; font-weight:700; flex-shrink:0; }
   .bar-track{ flex:1; background:var(--cream); border-radius:20px; height:16px; overflow:hidden; }
   .bar-fill{ height:100%; border-radius:20px; }
   .bar-row .bar-value{ width:46px; text-align:left; font-size:13px; color:var(--charcoal-soft); flex-shrink:0; }
 
-  /* ---------- table ---------- */
   .table-toolbar{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; justify-content:space-between; }
   .table-toolbar input, .table-toolbar select{
     padding:9px 12px; border-radius:8px; border:1px solid #e2d8c2; background:var(--cream); font-size:13.5px;
@@ -125,7 +119,6 @@
   .row-actions button.approve{ background:var(--green-pale); color:var(--green); }
   .row-actions button:hover{ filter:brightness(.95); }
 
-  /* ---------- add listing form ---------- */
   .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   @media(max-width:700px){ .form-grid{ grid-template-columns:1fr; } }
   .field{ margin-bottom:14px; }
@@ -147,7 +140,6 @@
   }
   .submit-btn:hover{ background:#b57a28; }
 
-  /* ---------- inbox / settings mock ---------- */
   .msg-item{ display:flex; gap:12px; padding:13px 6px; border-bottom:1px solid var(--cream-dark); }
   .msg-item .av{ width:38px; height:38px; border-radius:50%; background:var(--teal-pale); color:var(--teal); display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
   .msg-item .msg-title{ font-weight:700; font-size:14px; }
@@ -180,7 +172,6 @@
 </div>
 
 <div class="layout">
-  <!-- ===================== SIDEBAR: SELLER ===================== -->
   <div class="sidebar" id="sellerSidebar">
     <span class="group-label">البائع</span>
     <button class="nav-item active" data-panel="s-overview">📊 نظرة عامة</button>
@@ -192,7 +183,6 @@
 
   <div class="content">
 
-    <!-- ============ SELLER: OVERVIEW ============ -->
     <div class="content-panel active" id="panel-s-overview">
       <h2 class="page-title">أهلاً أبو خالد 👋</h2>
       <p class="page-sub">هيك نظرة سريعة عن حسابك اليوم</p>
@@ -210,7 +200,6 @@
       </div>
     </div>
 
-    <!-- ============ SELLER: LISTINGS ============ -->
     <div class="content-panel" id="panel-s-listings">
       <h2 class="page-title">إعلاناتي ومنتجاتي</h2>
       <p class="page-sub">إدارة كل إعلاناتك من مكان واحد</p>
@@ -232,7 +221,6 @@
       </div>
     </div>
 
-    <!-- ============ SELLER: ADD LISTING ============ -->
     <div class="content-panel" id="panel-s-add">
       <h2 class="page-title">إضافة إعلان جديد</h2>
       <p class="page-sub">اختر القسم وعبّي البيانات</p>
@@ -251,13 +239,11 @@
               <select><option>دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option></select>
             </div>
 
-            <!-- store fields -->
             <div class="field dyn dyn-store active"><label>قسم المتجر</label>
               <select><option>إلكترونيات</option><option>أزياء</option><option>منزل ومطبخ</option><option>جمال وعناية</option><option>أطفال</option><option>رياضة</option></select>
             </div>
             <div class="field dyn dyn-store active"><label>الكمية المتوفرة</label><input type="number" placeholder="مثال: 25"></div>
 
-            <!-- market fields -->
             <div class="field dyn dyn-market"><label>قسم سوق الاستخدام</label>
               <select><option>أثاث</option><option>أجهزة كهربائية</option><option>ملابس</option><option>موبايلات</option><option>أدوات منزلية</option></select>
             </div>
@@ -265,7 +251,6 @@
               <select><option>جديد بالكرتونة</option><option>مستعمل - ممتاز</option><option>مستعمل - جيد</option><option>يحتاج صيانة</option></select>
             </div>
 
-            <!-- estate fields -->
             <div class="field dyn dyn-estate"><label>نوع العقار</label>
               <select><option>شقة</option><option>فيلا</option><option>محل تجاري</option><option>أرض</option></select>
             </div>
@@ -273,7 +258,6 @@
             <div class="field dyn dyn-estate"><label>المساحة (م²)</label><input type="number" placeholder="مثال: 150"></div>
             <div class="field dyn dyn-estate"><label>الحي / المنطقة</label><input type="text" placeholder="مثال: المزة"></div>
 
-            <!-- cars fields -->
             <div class="field dyn dyn-cars"><label>الماركة</label>
               <select><option>كيا</option><option>هيونداي</option><option>تويوتا</option><option>مرسيدس</option><option>بي إم دبليو</option><option>سكودا</option></select>
             </div>
@@ -288,7 +272,6 @@
       </div>
     </div>
 
-    <!-- ============ SELLER: MESSAGES ============ -->
     <div class="content-panel" id="panel-s-messages">
       <h2 class="page-title">الرسائل</h2>
       <p class="page-sub">تواصل المشترين معك</p>
@@ -299,7 +282,6 @@
       </div>
     </div>
 
-    <!-- ============ SELLER: SETTINGS ============ -->
     <div class="content-panel" id="panel-s-settings">
       <h2 class="page-title">إعدادات الحساب</h2>
       <div class="panel">
@@ -313,7 +295,6 @@
       </div>
     </div>
 
-    <!-- ============ ADMIN: OVERVIEW ============ -->
     <div class="content-panel" id="panel-a-overview">
       <h2 class="page-title">نظرة عامة على المنصة</h2>
       <p class="page-sub">ملخص عن كل الموقع</p>
@@ -332,7 +313,6 @@
       </div>
     </div>
 
-    <!-- ============ ADMIN: USERS ============ -->
     <div class="content-panel" id="panel-a-users">
       <h2 class="page-title">المستخدمون</h2>
       <p class="page-sub">إدارة حسابات البائعين والمشترين</p>
@@ -348,7 +328,6 @@
       </div>
     </div>
 
-    <!-- ============ ADMIN: REVIEW ============ -->
     <div class="content-panel" id="panel-a-review">
       <h2 class="page-title">مراجعة الإعلانات</h2>
       <p class="page-sub">إعلانات بانتظار الموافقة قبل نشرها</p>
@@ -360,7 +339,6 @@
       </div>
     </div>
 
-    <!-- ============ ADMIN: REPORTS ============ -->
     <div class="content-panel" id="panel-a-reports">
       <h2 class="page-title">التقارير</h2>
       <p class="page-sub">أداء المنصة خلال آخر 6 أشهر</p>
@@ -375,7 +353,6 @@
       </div>
     </div>
 
-    <!-- ============ ADMIN: SETTINGS ============ -->
     <div class="content-panel" id="panel-a-settings">
       <h2 class="page-title">إعدادات الموقع</h2>
       <div class="panel">
@@ -395,7 +372,6 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* ================= DATA ================= */
 let sellerListings = [
   {title:"سماعة بلوتوث JBL", v:"v-store", vLabel:"المتجر", price:850000, status:"active", views:340},
   {title:"موبايل سامسونج A54", v:"v-store", vLabel:"المتجر", price:5200000, status:"active", views:512},
@@ -423,7 +399,6 @@ let adminReview = [
 const fmt = n => n.toLocaleString('en-US') + " ل.س";
 const statusLabel = {active:"نشط", paused:"متوقف", pending:"قيد المراجعة", blocked:"موقوف"};
 
-/* ================= RENDER: SELLER LISTINGS ================= */
 function renderSellerListings(){
   const filter = document.getElementById('sellerFilterVertical').value;
   const rows = sellerListings.filter(l => !filter || l.v === filter);
@@ -455,7 +430,6 @@ function deleteListing(title){
   showToast('🗑️ تم حذف الإعلان');
 }
 
-/* ================= RENDER: ADMIN USERS ================= */
 function renderAdminUsers(){
   document.getElementById('adminUsersBody').innerHTML = adminUsers.map(u => `
     <tr>
@@ -475,7 +449,6 @@ function toggleUser(name){
   showToast(u.status === 'active' ? `✅ تم تفعيل حساب ${name}` : `🚫 تم إيقاف حساب ${name}`);
 }
 
-/* ================= RENDER: ADMIN REVIEW ================= */
 function renderAdminReview(){
   const body = document.getElementById('adminReviewBody');
   body.innerHTML = adminReview.map(r => `
@@ -498,7 +471,6 @@ function reviewAction(title, action){
 
 renderSellerListings(); renderAdminUsers(); renderAdminReview();
 
-/* ================= ROLE SWITCH ================= */
 const roleSellerBtn = document.getElementById('roleSellerBtn');
 const roleAdminBtn = document.getElementById('roleAdminBtn');
 const sellerSidebar = document.getElementById('sellerSidebar');
@@ -516,7 +488,6 @@ function setRole(role){
 roleSellerBtn.addEventListener('click', () => setRole('seller'));
 roleAdminBtn.addEventListener('click', () => setRole('admin'));
 
-/* ================= SIDEBAR NAV ================= */
 function goToPanel(id){
   document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + id).classList.add('active');
@@ -527,7 +498,6 @@ document.querySelectorAll('.nav-item').forEach(b => {
   b.addEventListener('click', () => goToPanel(b.dataset.panel));
 });
 
-/* ================= DYNAMIC ADD-LISTING FORM ================= */
 const addSectionToggle = document.getElementById('addSectionToggle');
 addSectionToggle.querySelectorAll('button').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -544,11 +514,9 @@ document.getElementById('addForm').addEventListener('submit', e => {
   e.target.reset();
 });
 
-/* ================= SETTINGS MOCK SAVE ================= */
 document.getElementById('saveSettingsBtn').addEventListener('click', () => showToast('✅ تم حفظ التعديلات'));
 document.getElementById('saveSiteSettingsBtn').addEventListener('click', () => showToast('✅ تم حفظ إعدادات الموقع'));
 
-/* ================= TOAST ================= */
 const toast = document.getElementById('toast');
 function showToast(msg){
   toast.textContent = msg;
