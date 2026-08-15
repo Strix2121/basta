@@ -17,6 +17,7 @@
     --stone-pale:#EDE6D9;
     --copper:#C68A34;
     --copper-pale:#F5E7CE;
+    --red:#B03A2E;
     --cream:#F4EEE1;
     --cream-dark:#E9DFC8;
     --charcoal:#2A241D;
@@ -170,10 +171,10 @@
     height:130px; border-radius:var(--radius-arch); margin:10px 10px 0;
     display:flex; align-items:center; justify-content:center; font-size:40px;
   }
-  .thumb.t-store{ background:var(--teal-pale); }
-  .thumb.t-market{ background:var(--clay-pale); }
-  .thumb.t-estate{ background:var(--stone-pale); }
-  .thumb.t-cars{ background:var(--copper-pale); }
+  .thumb.t-store, .pm-main-image.t-store, .pm-thumb.t-store{ background:var(--teal-pale); }
+  .thumb.t-market, .pm-main-image.t-market, .pm-thumb.t-market{ background:var(--clay-pale); }
+  .thumb.t-estate, .pm-main-image.t-estate, .pm-thumb.t-estate{ background:var(--stone-pale); }
+  .thumb.t-cars, .pm-main-image.t-cars, .pm-thumb.t-cars{ background:var(--copper-pale); }
 
   .card .body{ padding:14px 14px 16px; flex:1; display:flex; flex-direction:column; gap:6px; }
   .card h4{ font-size:15.5px; font-weight:700; line-height:1.4; }
@@ -307,6 +308,25 @@
     font-weight:700; font-size:15px; margin-top:6px;
   }
   .modal .submit:hover{ background:var(--teal-light); }
+
+  .upload-zone{
+    border:2px dashed var(--cream-dark); border-radius:12px; padding:26px 16px; text-align:center;
+    cursor:pointer; transition:.2s; background:var(--cream);
+  }
+  .upload-zone:hover, .upload-zone.dragover{ border-color:var(--copper); background:var(--copper-pale); }
+  .upload-icon{ display:block; font-size:26px; margin-bottom:6px; }
+  .upload-text{ font-size:12.5px; color:var(--charcoal-soft); }
+  .upload-thumbs{ display:flex; gap:9px; flex-wrap:wrap; margin-top:10px; }
+  .upload-thumb{
+    position:relative; width:66px; height:66px; border-radius:10px; overflow:hidden;
+    border:1.5px solid var(--cream-dark);
+  }
+  .upload-thumb img{ width:100%; height:100%; object-fit:cover; }
+  .upload-thumb .remove-thumb{
+    position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%;
+    background:rgba(42,36,29,.75); color:var(--white); font-size:11px; display:flex; align-items:center; justify-content:center;
+  }
+  .upload-thumb .remove-thumb:hover{ background:var(--red); }
 
   .product-modal{ max-width:840px; }
   .pm-body{ display:grid; grid-template-columns:1.1fr 1fr; gap:26px; }
@@ -623,6 +643,15 @@
           <option>اللاذقية</option><option>طرطوس</option><option>درعا</option><option>السويداء</option>
         </select>
       </div>
+      <div class="field">
+        <label>صور الإعلان</label>
+        <div class="upload-zone" id="uploadZone">
+          <span class="upload-icon">📷</span>
+          <span class="upload-text">اضغط هون أو اسحب الصور حتى 6 صور</span>
+          <input type="file" id="listingImages" accept="image/*" multiple hidden>
+        </div>
+        <div class="upload-thumbs" id="uploadThumbs"></div>
+      </div>
       <div class="field"><label>وصف الإعلان</label><textarea placeholder="اكتب تفاصيل الإعلان هون..."></textarea></div>
       <button type="submit" class="submit">نشر الإعلان</button>
     </form>
@@ -703,29 +732,54 @@ const estateListings = [
 ];
 
 const carsListings = [
-  {title:"كيا سيراتو 2019", brand:"كيا", year:2019, km:"78,000", trans:"أوتوماتيك", city:"دمشق", price:145000000, icon:"🚗"},
-  {title:"هيونداي إلنترا 2021", brand:"هيونداي", year:2021, km:"41,000", trans:"أوتوماتيك", city:"حلب", price:195000000, icon:"🚘"},
-  {title:"تويوتا كورولا 2017", brand:"تويوتا", year:2017, km:"110,000", trans:"عادي", city:"حمص", price:120000000, icon:"🚙"},
-  {title:"مرسيدس C200 2015", brand:"مرسيدس", year:2015, km:"95,000", trans:"أوتوماتيك", city:"اللاذقية", price:410000000, icon:"🚗"},
-  {title:"بي إم دبليو 320i 2018", brand:"بي إم دبليو", year:2018, km:"60,000", trans:"أوتوماتيك", city:"طرطوس", price:350000000, icon:"🚘"},
-  {title:"سكودا أوكتافيا 2020", brand:"سكودا", year:2020, km:"33,000", trans:"أوتوماتيك", city:"دمشق", price:230000000, icon:"🚙"},
+  {title:"كيا سيراتو 2019", brand:"كيا", year:2019, km:"78,000", trans:"أوتوماتيك", city:"دمشق", price:145000000, icon:"🚗", images:["🚗","🛞","🪑","🔧"], desc:"كيا سيراتو موديل 2019 بحالة ممتازة، صيانة دورية منتظمة، بدون حوادث، فحص كامل متوفر."},
+  {title:"هيونداي إلنترا 2021", brand:"هيونداي", year:2021, km:"41,000", trans:"أوتوماتيك", city:"حلب", price:195000000, icon:"🚘", images:["🚘","🛞","🪑","📟"], desc:"هيونداي إلنترا 2021 كيلومترات قليلة، لسا تحت الكفالة، فل أوبشن مع شاشة وكاميرا خلفية."},
+  {title:"تويوتا كورولا 2017", brand:"تويوتا", year:2017, km:"110,000", trans:"عادي", city:"حمص", price:120000000, icon:"🚙", images:["🚙","🛞","🪑","🔧"], desc:"تويوتا كورولا اقتصادية بصيانة تويوتا الرسمية، محرك بحالة ممتازة، مناسبة للاستخدام اليومي."},
+  {title:"مرسيدس C200 2015", brand:"مرسيدس", year:2015, km:"95,000", trans:"أوتوماتيك", city:"اللاذقية", price:410000000, icon:"🚗", images:["🚗","🛞","🪑","📟"], desc:"مرسيدس C200 فل أوبشن، جلد طبيعي، فتحة سقف، صيانة دائمة بالوكالة."},
+  {title:"بي إم دبليو 320i 2018", brand:"بي إم دبليو", year:2018, km:"60,000", trans:"أوتوماتيك", city:"طرطوس", price:350000000, icon:"🚘", images:["🚘","🛞","🪑","🔧"], desc:"بي إم دبليو 320i رياضية بحالة الوكالة، كيلومترات منخفضة، دفتر صيانة كامل."},
+  {title:"سكودا أوكتافيا 2020", brand:"سكودا", year:2020, km:"33,000", trans:"أوتوماتيك", city:"دمشق", price:230000000, icon:"🚙", images:["🚙","🛞","🪑","📟"], desc:"سكودا أوكتافيا كيلومترات قليلة جداً، حالة الصفر تقريباً، صاحب واحد من الوكالة."},
 ];
 
 const fmt = n => n.toLocaleString('en-US') + " ل.س";
 
-let pmState = { product: null, imgIndex: 0, qty: 1 };
+let pmState = { item: null, vertical: 'store', imgIndex: 0, qty: 1 };
 const productOverlay = document.getElementById('productOverlay');
 
-function openProductModal(name){
-  const p = storeProducts.find(x => x.name === name);
-  if(!p) return;
-  pmState = { product: p, imgIndex: 0, qty: 1 };
-  document.getElementById('pmTitle').textContent = p.name;
-  document.getElementById('pmCategory').textContent = p.cat;
-  document.getElementById('pmPrice').textContent = fmt(p.price);
-  document.getElementById('pmVendor').textContent = 'البائع: ' + p.vendor;
-  document.getElementById('pmDesc').textContent = p.desc;
+function buildModalData(vertical, item){
+  if(vertical === 'store'){
+    return { title:item.name, badgeText:item.cat, price:fmt(item.price), meta:'البائع: ' + item.vendor, desc:item.desc, images:item.images, cta:'cart' };
+  }
+  if(vertical === 'market'){
+    return { title:item.title, badgeText:item.cat, price:fmt(item.price), meta:`📍 ${item.city} · ${item.time} · ${item.seller}`, desc:item.desc, images:item.images, cta:'contact' };
+  }
+  if(vertical === 'estate'){
+    const suffix = item.purpose === 'للإيجار' ? ' / شهرياً' : '';
+    return { title:item.title, badgeText:`${item.type} · ${item.purpose}`, price:fmt(item.price) + suffix, meta:`📍 ${item.city} - ${item.area} · ${item.size} م²`, desc:item.desc, images:item.images, cta:'contact' };
+  }
+  return { title:item.title, badgeText:`${item.brand} · ${item.year}`, price:fmt(item.price), meta:`📍 ${item.city} · ${item.km} كم · ${item.trans}`, desc:item.desc, images:item.images, cta:'contact' };
+}
+
+function openItemModal(vertical, key){
+  const source = { store:storeProducts, market:marketAds, estate:estateListings, cars:carsListings }[vertical];
+  const matchKey = vertical === 'store' ? 'name' : 'title';
+  const item = source.find(x => x[matchKey] === key);
+  if(!item) return;
+  const data = buildModalData(vertical, item);
+  pmState = { item, vertical, imgIndex: 0, qty: 1 };
+
+  document.getElementById('pmTitle').textContent = data.title;
+  const badge = document.getElementById('pmCategory');
+  badge.textContent = data.badgeText;
+  badge.className = 'badge ' + vertical;
+  document.getElementById('pmPrice').textContent = data.price;
+  document.getElementById('pmVendor').textContent = data.meta;
+  document.getElementById('pmDesc').textContent = data.desc;
   document.getElementById('qtyValue').textContent = '1';
+
+  document.getElementById('pmMainImage').className = 'pm-main-image t-' + vertical;
+  document.querySelector('.pm-qty').style.display = data.cta === 'cart' ? 'flex' : 'none';
+  document.getElementById('pmAddCart').textContent = data.cta === 'cart' ? 'أضف للسلة 🛒' : 'تواصل مع البائع 💬';
+
   renderGallery();
   productOverlay.classList.add('open');
 }
@@ -733,18 +787,19 @@ function closeProductModal(){
   productOverlay.classList.remove('open');
 }
 function renderGallery(){
-  const p = pmState.product;
-  document.getElementById('pmMainIcon').textContent = p.images[pmState.imgIndex];
-  document.getElementById('pmThumbs').innerHTML = p.images.map((img, i) =>
-    `<div class="pm-thumb t-store ${i === pmState.imgIndex ? 'active' : ''}" onclick="pmSetImage(${i})">${img}</div>`
+  const data = buildModalData(pmState.vertical, pmState.item);
+  const images = data.images;
+  document.getElementById('pmMainIcon').textContent = images[pmState.imgIndex];
+  document.getElementById('pmThumbs').innerHTML = images.map((img, i) =>
+    `<div class="pm-thumb t-${pmState.vertical} ${i === pmState.imgIndex ? 'active' : ''}" onclick="pmSetImage(${i})">${img}</div>`
   ).join('');
-  document.getElementById('pmDots').innerHTML = p.images.map((_, i) =>
+  document.getElementById('pmDots').innerHTML = images.map((_, i) =>
     `<span class="${i === pmState.imgIndex ? 'active' : ''}"></span>`
   ).join('');
 }
 function pmChangeImage(dir){
-  const p = pmState.product;
-  pmState.imgIndex = (pmState.imgIndex + dir + p.images.length) % p.images.length;
+  const data = buildModalData(pmState.vertical, pmState.item);
+  pmState.imgIndex = (pmState.imgIndex + dir + data.images.length) % data.images.length;
   renderGallery();
 }
 function pmSetImage(i){
@@ -770,7 +825,12 @@ document.getElementById('qtyPlus').addEventListener('click', () => {
   document.getElementById('qtyValue').textContent = pmState.qty;
 });
 document.getElementById('pmAddCart').addEventListener('click', () => {
-  showToast(`✅ تمت إضافة ${pmState.qty} × ${pmState.product.name} للسلة`);
+  const data = buildModalData(pmState.vertical, pmState.item);
+  if(data.cta === 'cart'){
+    showToast(`✅ تمت إضافة ${pmState.qty} × ${data.title} للسلة`);
+  } else {
+    showToast(`✅ تم إرسال طلب تواصل مع البائع بخصوص "${data.title}"`);
+  }
 });
 
 (function(){
@@ -785,7 +845,7 @@ document.getElementById('pmAddCart').addEventListener('click', () => {
 })();
 
 function storeCard(p){
-  return `<div class="card" onclick="openProductModal('${p.name.replace(/'/g,"\\'")}')">
+  return `<div class="card" onclick="openItemModal('store','${p.name.replace(/'/g,"\\'")}')">
     <div class="thumb t-store">${p.icon}</div>
     <div class="body">
       <span class="badge store">${p.cat}</span>
@@ -797,7 +857,7 @@ function storeCard(p){
   </div>`;
 }
 function marketCard(a){
-  return `<div class="card">
+  return `<div class="card" onclick="openItemModal('market','${a.title.replace(/'/g,"\\'")}')">
     <div class="thumb t-market">${a.icon}</div>
     <div class="body">
       <span class="badge market">${a.cat}</span>
@@ -805,11 +865,11 @@ function marketCard(a){
       <span class="meta">📍 ${a.city} · ${a.time} · ${a.seller}</span>
       <span class="price">${fmt(a.price)}</span>
     </div>
-    <div class="cta market">تواصل مع البائع</div>
+    <div class="cta market">عرض التفاصيل</div>
   </div>`;
 }
 function estateCard(e){
-  return `<div class="card">
+  return `<div class="card" onclick="openItemModal('estate','${e.title.replace(/'/g,"\\'")}')">
     <div class="thumb t-estate">${e.icon}</div>
     <div class="body">
       <span class="badge estate">${e.type} · ${e.purpose}</span>
@@ -821,7 +881,7 @@ function estateCard(e){
   </div>`;
 }
 function carCard(c){
-  return `<div class="card">
+  return `<div class="card" onclick="openItemModal('cars','${c.title.replace(/'/g,"\\'")}')">
     <div class="thumb t-cars">${c.icon}</div>
     <div class="body">
       <span class="badge cars">${c.brand} · ${c.year}</span>
@@ -829,7 +889,7 @@ function carCard(c){
       <span class="meta">📍 ${c.city} · ${c.km} كم · ${c.trans}</span>
       <span class="price">${fmt(c.price)}</span>
     </div>
-    <div class="cta cars">تواصل مع البائع</div>
+    <div class="cta cars">عرض التفاصيل</div>
   </div>`;
 }
 function emptyState(msg){
@@ -940,6 +1000,52 @@ document.getElementById('adForm').addEventListener('submit', e => {
   closeModal();
   showToast('✅ تم إرسال إعلانك — هاد نموذج تجريبي بس');
   e.target.reset();
+  quickAdImages = [];
+  renderQuickAdThumbs();
+});
+
+let quickAdImages = [];
+const quickUploadZone = document.getElementById('uploadZone');
+const quickListingImagesInput = document.getElementById('listingImages');
+const quickUploadThumbs = document.getElementById('uploadThumbs');
+const QUICK_MAX_IMAGES = 6;
+
+function renderQuickAdThumbs(){
+  quickUploadThumbs.innerHTML = quickAdImages.map((src, i) =>
+    `<div class="upload-thumb"><img src="${src}" alt="صورة الإعلان"><button type="button" class="remove-thumb" onclick="removeQuickAdImage(${i})">✕</button></div>`
+  ).join('');
+  quickUploadZone.style.display = quickAdImages.length >= QUICK_MAX_IMAGES ? 'none' : '';
+}
+function removeQuickAdImage(i){
+  quickAdImages.splice(i, 1);
+  renderQuickAdThumbs();
+}
+function addQuickAdFiles(files){
+  const remaining = QUICK_MAX_IMAGES - quickAdImages.length;
+  Array.from(files).slice(0, remaining).forEach(file => {
+    if(!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      quickAdImages.push(e.target.result);
+      renderQuickAdThumbs();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+quickUploadZone.addEventListener('click', () => quickListingImagesInput.click());
+quickListingImagesInput.addEventListener('change', e => {
+  addQuickAdFiles(e.target.files);
+  quickListingImagesInput.value = '';
+});
+quickUploadZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  quickUploadZone.classList.add('dragover');
+});
+quickUploadZone.addEventListener('dragleave', () => quickUploadZone.classList.remove('dragover'));
+quickUploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  quickUploadZone.classList.remove('dragover');
+  addQuickAdFiles(e.dataTransfer.files);
 });
 </script>
 </body>
