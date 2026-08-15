@@ -140,6 +140,25 @@
   }
   .submit-btn:hover{ background:#b57a28; }
 
+  .upload-zone{
+    border:2px dashed var(--cream-dark); border-radius:12px; padding:30px 16px; text-align:center;
+    cursor:pointer; transition:.2s; background:var(--cream);
+  }
+  .upload-zone:hover, .upload-zone.dragover{ border-color:var(--copper); background:var(--copper-pale); }
+  .upload-icon{ display:block; font-size:28px; margin-bottom:8px; }
+  .upload-text{ font-size:13px; color:var(--charcoal-soft); }
+  .upload-thumbs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .upload-thumb{
+    position:relative; width:78px; height:78px; border-radius:10px; overflow:hidden;
+    border:1.5px solid var(--cream-dark);
+  }
+  .upload-thumb img{ width:100%; height:100%; object-fit:cover; }
+  .upload-thumb .remove-thumb{
+    position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%;
+    background:rgba(42,36,29,.75); color:var(--white); font-size:12px; display:flex; align-items:center; justify-content:center;
+  }
+  .upload-thumb .remove-thumb:hover{ background:var(--red); }
+
   .msg-item{ display:flex; gap:12px; padding:13px 6px; border-bottom:1px solid var(--cream-dark); }
   .msg-item .av{ width:38px; height:38px; border-radius:50%; background:var(--teal-pale); color:var(--teal); display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
   .msg-item .msg-title{ font-weight:700; font-size:14px; }
@@ -264,6 +283,16 @@
             <div class="field dyn dyn-cars"><label>سنة الصنع</label><input type="number" placeholder="مثال: 2019"></div>
             <div class="field dyn dyn-cars"><label>الكيلومترات</label><input type="text" placeholder="مثال: 78,000"></div>
             <div class="field dyn dyn-cars"><label>ناقل الحركة</label><select><option>أوتوماتيك</option><option>عادي</option></select></div>
+
+            <div class="field full">
+              <label>صور الإعلان</label>
+              <div class="upload-zone" id="uploadZone">
+                <span class="upload-icon">📷</span>
+                <span class="upload-text">اضغط هون أو اسحب الصور حتى 6 صور</span>
+                <input type="file" id="listingImages" accept="image/*" multiple hidden>
+              </div>
+              <div class="upload-thumbs" id="uploadThumbs"></div>
+            </div>
 
             <div class="field full"><label>الوصف</label><textarea placeholder="اكتب تفاصيل الإعلان هون..."></textarea></div>
           </div>
@@ -512,6 +541,52 @@ document.getElementById('addForm').addEventListener('submit', e => {
   e.preventDefault();
   showToast('✅ تم إرسال الإعلان للمراجعة — هاد نموذج تجريبي');
   e.target.reset();
+  uploadedImages = [];
+  renderUploadThumbs();
+});
+
+let uploadedImages = [];
+const uploadZone = document.getElementById('uploadZone');
+const listingImagesInput = document.getElementById('listingImages');
+const uploadThumbs = document.getElementById('uploadThumbs');
+const MAX_IMAGES = 6;
+
+function renderUploadThumbs(){
+  uploadThumbs.innerHTML = uploadedImages.map((src, i) =>
+    `<div class="upload-thumb"><img src="${src}" alt="صورة الإعلان"><button type="button" class="remove-thumb" onclick="removeUploadedImage(${i})">✕</button></div>`
+  ).join('');
+  uploadZone.style.display = uploadedImages.length >= MAX_IMAGES ? 'none' : '';
+}
+function removeUploadedImage(i){
+  uploadedImages.splice(i, 1);
+  renderUploadThumbs();
+}
+function addFiles(files){
+  const remaining = MAX_IMAGES - uploadedImages.length;
+  Array.from(files).slice(0, remaining).forEach(file => {
+    if(!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      uploadedImages.push(e.target.result);
+      renderUploadThumbs();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+uploadZone.addEventListener('click', () => listingImagesInput.click());
+listingImagesInput.addEventListener('change', e => {
+  addFiles(e.target.files);
+  listingImagesInput.value = '';
+});
+uploadZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  uploadZone.classList.add('dragover');
+});
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  addFiles(e.dataTransfer.files);
 });
 
 document.getElementById('saveSettingsBtn').addEventListener('click', () => showToast('✅ تم حفظ التعديلات'));
