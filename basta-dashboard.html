@@ -268,7 +268,7 @@
             <div class="field full"><label>عنوان الإعلان</label><input type="text" placeholder="مثال: آيفون 13 برو حالة ممتازة" required></div>
             <div class="field"><label>السعر (ل.س)</label><input type="text" placeholder="مثال: 3,500,000" required></div>
             <div class="field"><label>المحافظة</label>
-              <select><option>دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option></select>
+              <select><option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option></select>
             </div>
 
             <div class="field dyn dyn-store active"><label>قسم المتجر</label>
@@ -330,81 +330,10 @@
         <div class="form-grid">
           <div class="field"><label>الاسم</label><input type="text" value="أبو خالد"></div>
           <div class="field"><label>رقم الهاتف</label><input type="text" value="0933 XXX XXX"></div>
-          <div class="field"><label>المحافظة</label><select><option>دمشق</option><option>حلب</option><option>حمص</option></select></div>
+          <div class="field"><label>المحافظة</label><select><option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option></select></div>
           <div class="field"><label>البريد الإلكتروني</label><input type="text" value="abukhaled@example.com"></div>
         </div>
         <button class="submit-btn" id="saveSettingsBtn">حفظ التعديلات</button>
-      </div>
-    </div>
-
-    <div class="content-panel" id="panel-a-overview">
-      <h2 class="page-title">نظرة عامة على المنصة</h2>
-      <p class="page-sub">ملخص عن كل الموقع</p>
-      <div class="stats">
-        <div class="stat-card"><div class="label">إجمالي المستخدمين</div><div class="value">3,112</div><div class="delta">+64 هالأسبوع</div></div>
-        <div class="stat-card clay"><div class="label">إجمالي الإعلانات</div><div class="value">12,438</div><div class="delta">+310 هالأسبوع</div></div>
-        <div class="stat-card copper"><div class="label">قيد المراجعة</div><div class="value">27</div><div class="delta">يحتاج إجراء</div></div>
-        <div class="stat-card stone"><div class="label">بلاغات مفتوحة</div><div class="value">4</div><div class="delta">يحتاج متابعة</div></div>
-      </div>
-      <div class="panel">
-        <h3>توزيع الإعلانات حسب القسم</h3>
-        <div class="bar-row"><span class="bar-label">المتجر</span><div class="bar-track"><div class="bar-fill" style="width:70%; background:var(--teal);"></div></div><span class="bar-value">4,120</span></div>
-        <div class="bar-row"><span class="bar-label">سوق الاستخدام</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--clay);"></div></div><span class="bar-value">5,860</span></div>
-        <div class="bar-row"><span class="bar-label">عقارات</span><div class="bar-track"><div class="bar-fill" style="width:32%; background:var(--stone);"></div></div><span class="bar-value">1,340</span></div>
-        <div class="bar-row"><span class="bar-label">سيارات</span><div class="bar-track"><div class="bar-fill" style="width:20%; background:var(--copper);"></div></div><span class="bar-value">1,118</span></div>
-      </div>
-    </div>
-
-    <div class="content-panel" id="panel-a-users">
-      <h2 class="page-title">المستخدمون</h2>
-      <p class="page-sub">إدارة حسابات البائعين والمشترين</p>
-      <div class="table-toolbar">
-        <input type="text" placeholder="دوّر باسم أو رقم هاتف...">
-        <select><option value="">كل الحالات</option><option>نشط</option><option>موقوف</option></select>
-      </div>
-      <div class="panel" style="overflow-x:auto;">
-        <table>
-          <thead><tr><th>المستخدم</th><th>تاريخ الانضمام</th><th>عدد الإعلانات</th><th>الحالة</th><th>إجراءات</th></tr></thead>
-          <tbody id="adminUsersBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="content-panel" id="panel-a-review">
-      <h2 class="page-title">مراجعة الإعلانات</h2>
-      <p class="page-sub">إعلانات بانتظار الموافقة قبل نشرها</p>
-      <div class="panel" style="overflow-x:auto;">
-        <table>
-          <thead><tr><th>الإعلان</th><th>القسم</th><th>البائع</th><th>السعر</th><th>إجراءات</th></tr></thead>
-          <tbody id="adminReviewBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="content-panel" id="panel-a-reports">
-      <h2 class="page-title">التقارير</h2>
-      <p class="page-sub">أداء المنصة خلال آخر 6 أشهر</p>
-      <div class="panel">
-        <h3>نمو عدد الإعلانات الجديدة شهرياً</h3>
-        <div class="bar-row"><span class="bar-label">آذار</span><div class="bar-track"><div class="bar-fill" style="width:40%; background:var(--teal);"></div></div><span class="bar-value">820</span></div>
-        <div class="bar-row"><span class="bar-label">نيسان</span><div class="bar-track"><div class="bar-fill" style="width:52%; background:var(--teal);"></div></div><span class="bar-value">1,060</span></div>
-        <div class="bar-row"><span class="bar-label">أيار</span><div class="bar-track"><div class="bar-fill" style="width:61%; background:var(--teal);"></div></div><span class="bar-value">1,240</span></div>
-        <div class="bar-row"><span class="bar-label">حزيران</span><div class="bar-track"><div class="bar-fill" style="width:75%; background:var(--teal);"></div></div><span class="bar-value">1,510</span></div>
-        <div class="bar-row"><span class="bar-label">تموز</span><div class="bar-track"><div class="bar-fill" style="width:88%; background:var(--teal);"></div></div><span class="bar-value">1,790</span></div>
-        <div class="bar-row"><span class="bar-label">آب</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--teal);"></div></div><span class="bar-value">2,030</span></div>
-      </div>
-    </div>
-
-    <div class="content-panel" id="panel-a-settings">
-      <h2 class="page-title">إعدادات الموقع</h2>
-      <div class="panel">
-        <div class="form-grid">
-          <div class="field"><label>اسم المنصة</label><input type="text" value="بسطة"></div>
-          <div class="field"><label>بريد التواصل</label><input type="text" value="support@basta.sy"></div>
-          <div class="field"><label>عمولة المتجر (%)</label><input type="text" value="5"></div>
-          <div class="field"><label>مدة عرض الإعلان (يوم)</label><input type="text" value="30"></div>
-        </div>
-        <button class="submit-btn" id="saveSiteSettingsBtn">حفظ الإعدادات</button>
       </div>
     </div>
 
@@ -446,20 +375,6 @@ let sellerListings = [
   {title:"شقة 3 غرف طابق ثالث", v:"v-estate", vLabel:"عقارات", price:850000000, status:"pending", views:94, desc:"شقة واسعة بإطلالة مفتوحة، بناء حديث مع مصعد وموقف سيارة.", images:[]},
   {title:"كيا سيراتو 2019", v:"v-cars", vLabel:"سيارات", price:145000000, status:"active", views:401, desc:"سيارة بحالة ممتازة وصيانة دورية منتظمة، بدون حوادث.", images:[]},
   {title:"دراجة رياضية", v:"v-store", vLabel:"المتجر", price:2100000, status:"paused", views:76, desc:"دراجة هوائية بإطار خفيف ومتين، مناسبة للطرقات الجبلية.", images:[]},
-];
-
-let adminUsers = [
-  {name:"أبو خالد", joined:"يناير 2025", count:7, status:"active"},
-  {name:"سامر مصطفى", joined:"مارس 2025", count:3, status:"active"},
-  {name:"رهف العلي", joined:"مايو 2025", count:12, status:"active"},
-  {name:"عدنان حمود", joined:"يونيو 2025", count:1, status:"blocked"},
-  {name:"لينا كردي", joined:"أغسطس 2025", count:5, status:"active"},
-];
-
-let adminReview = [
-  {title:"محل تجاري على شارع رئيسي", v:"v-estate", vLabel:"عقارات", seller:"رهف العلي", price:2200000},
-  {title:"بي إم دبليو 320i 2018", v:"v-cars", vLabel:"سيارات", seller:"سامر مصطفى", price:350000000},
-  {title:"فستان زفاف مستعمل مرة واحدة", v:"v-market", vLabel:"سوق الاستخدام", seller:"لينا كردي", price:900000},
 ];
 
 const fmt = n => n.toLocaleString('en-US') + " ل.س";
@@ -573,63 +488,7 @@ document.getElementById('editForm').addEventListener('submit', e => {
   showToast('✅ تم حفظ التعديلات على الإعلان');
 });
 
-function renderAdminUsers(){
-  document.getElementById('adminUsersBody').innerHTML = adminUsers.map(u => `
-    <tr>
-      <td><div class="cell-title">${u.name}</div></td>
-      <td class="cell-sub">${u.joined}</td>
-      <td>${u.count}</td>
-      <td><span class="badge ${u.status}">${statusLabel[u.status]}</span></td>
-      <td><div class="row-actions">
-        <button class="${u.status === 'active' ? 'danger' : 'approve'}" onclick="toggleUser('${u.name}')">${u.status === 'active' ? 'إيقاف الحساب' : 'إعادة تفعيل'}</button>
-      </div></td>
-    </tr>`).join('');
-}
-function toggleUser(name){
-  const u = adminUsers.find(u => u.name === name);
-  u.status = u.status === 'active' ? 'blocked' : 'active';
-  renderAdminUsers();
-  showToast(u.status === 'active' ? `✅ تم تفعيل حساب ${name}` : `🚫 تم إيقاف حساب ${name}`);
-}
-
-function renderAdminReview(){
-  const body = document.getElementById('adminReviewBody');
-  body.innerHTML = adminReview.map(r => `
-    <tr>
-      <td><div class="cell-title">${r.title}</div></td>
-      <td><span class="badge ${r.v}">${r.vLabel}</span></td>
-      <td class="cell-sub">${r.seller}</td>
-      <td>${fmt(r.price)}</td>
-      <td><div class="row-actions">
-        <button class="approve" onclick="reviewAction('${r.title}','approve')">قبول</button>
-        <button class="danger" onclick="reviewAction('${r.title}','reject')">رفض</button>
-      </div></td>
-    </tr>`).join('') || `<tr><td colspan="5" style="text-align:center; color:var(--charcoal-soft); padding:26px;">ما في إعلانات بانتظار المراجعة 🎉</td></tr>`;
-}
-function reviewAction(title, action){
-  adminReview = adminReview.filter(r => r.title !== title);
-  renderAdminReview();
-  showToast(action === 'approve' ? '✅ تم قبول الإعلان ونشره' : '❌ تم رفض الإعلان');
-}
-
-renderSellerListings(); renderAdminUsers(); renderAdminReview();
-
-const roleSellerBtn = document.getElementById('roleSellerBtn');
-const roleAdminBtn = document.getElementById('roleAdminBtn');
-const sellerSidebar = document.getElementById('sellerSidebar');
-const adminSidebar = document.getElementById('adminSidebar');
-
-function setRole(role){
-  const isSeller = role === 'seller';
-  roleSellerBtn.classList.toggle('active', isSeller);
-  roleAdminBtn.classList.toggle('active', !isSeller);
-  sellerSidebar.style.display = isSeller ? 'flex' : 'none';
-  adminSidebar.style.display = isSeller ? 'none' : 'flex';
-  document.getElementById('avatarLetter').textContent = isSeller ? 'ب' : 'أ';
-  goToPanel(isSeller ? 's-overview' : 'a-overview');
-}
-roleSellerBtn.addEventListener('click', () => setRole('seller'));
-roleAdminBtn.addEventListener('click', () => setRole('admin'));
+renderSellerListings();
 
 function goToPanel(id){
   document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
@@ -704,7 +563,6 @@ uploadZone.addEventListener('drop', e => {
 });
 
 document.getElementById('saveSettingsBtn').addEventListener('click', () => showToast('✅ تم حفظ التعديلات'));
-document.getElementById('saveSiteSettingsBtn').addEventListener('click', () => showToast('✅ تم حفظ إعدادات الموقع'));
 
 const toast = document.getElementById('toast');
 function showToast(msg){
