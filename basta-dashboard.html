@@ -159,6 +159,19 @@
   }
   .upload-thumb .remove-thumb:hover{ background:var(--red); }
 
+  .overlay{
+    position:fixed; inset:0; background:rgba(42,36,29,.55); z-index:100;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .overlay.open{ display:flex; }
+  .edit-modal{
+    background:var(--white); border-radius:16px; max-width:480px; width:100%;
+    padding:26px; max-height:88vh; overflow:auto;
+  }
+  .edit-modal .modal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .edit-modal .modal-head h3{ font-size:20px; }
+  .edit-modal .modal-head button{ background:transparent; font-size:22px; color:var(--charcoal-soft); }
+
   .msg-item{ display:flex; gap:12px; padding:13px 6px; border-bottom:1px solid var(--cream-dark); }
   .msg-item .av{ width:38px; height:38px; border-radius:50%; background:var(--teal-pale); color:var(--teal); display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
   .msg-item .msg-title{ font-weight:700; font-size:14px; }
@@ -398,17 +411,41 @@
   </div>
 </div>
 
+<div class="overlay" id="editOverlay">
+  <div class="edit-modal">
+    <div class="modal-head">
+      <h3>تعديل الإعلان</h3>
+      <button id="closeEditModal" type="button">✕</button>
+    </div>
+    <form id="editForm">
+      <div class="field"><label>عنوان الإعلان</label><input type="text" id="editTitle" required></div>
+      <div class="field"><label>السعر (ل.س)</label><input type="text" id="editPrice" required></div>
+      <div class="field"><label>الوصف</label><textarea id="editDesc"></textarea></div>
+      <div class="field">
+        <label>صور الإعلان</label>
+        <div class="upload-zone" id="editUploadZone">
+          <span class="upload-icon">📷</span>
+          <span class="upload-text">اضغط هون أو اسحب الصور حتى 6 صور</span>
+          <input type="file" id="editListingImages" accept="image/*" multiple hidden>
+        </div>
+        <div class="upload-thumbs" id="editUploadThumbs"></div>
+      </div>
+      <button type="submit" class="submit-btn" style="width:100%;">حفظ التعديلات</button>
+    </form>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 let sellerListings = [
-  {title:"سماعة بلوتوث JBL", v:"v-store", vLabel:"المتجر", price:850000, status:"active", views:340},
-  {title:"موبايل سامسونج A54", v:"v-store", vLabel:"المتجر", price:5200000, status:"active", views:512},
-  {title:"طقم صالون مستعمل حالة جيدة", v:"v-market", vLabel:"سوق الاستخدام", price:2200000, status:"active", views:288},
-  {title:"ثلاجة LG استعمال سنة", v:"v-market", vLabel:"سوق الاستخدام", price:3800000, status:"paused", views:190},
-  {title:"شقة 3 غرف طابق ثالث", v:"v-estate", vLabel:"عقارات", price:850000000, status:"pending", views:94},
-  {title:"كيا سيراتو 2019", v:"v-cars", vLabel:"سيارات", price:145000000, status:"active", views:401},
-  {title:"دراجة رياضية", v:"v-store", vLabel:"المتجر", price:2100000, status:"paused", views:76},
+  {title:"سماعة بلوتوث JBL", v:"v-store", vLabel:"المتجر", price:850000, status:"active", views:340, desc:"سماعة لاسلكية بصوت نقي وبيس قوي، بطارية بتدوم طول اليوم.", images:[]},
+  {title:"موبايل سامسونج A54", v:"v-store", vLabel:"المتجر", price:5200000, status:"active", views:512, desc:"موبايل بكاميرا احترافية وذاكرة كبيرة، حالة ممتازة.", images:[]},
+  {title:"طقم صالون مستعمل حالة جيدة", v:"v-market", vLabel:"سوق الاستخدام", price:2200000, status:"active", views:288, desc:"طقم صالون 7 مقاعد نظيف بدون تمزق، سبب البيع تغيير الديكور.", images:[]},
+  {title:"ثلاجة LG استعمال سنة", v:"v-market", vLabel:"سوق الاستخدام", price:3800000, status:"paused", views:190, desc:"ثلاجة بحالة ممتازة، استعمال سنة وحدة، موفرة كهرباء.", images:[]},
+  {title:"شقة 3 غرف طابق ثالث", v:"v-estate", vLabel:"عقارات", price:850000000, status:"pending", views:94, desc:"شقة واسعة بإطلالة مفتوحة، بناء حديث مع مصعد وموقف سيارة.", images:[]},
+  {title:"كيا سيراتو 2019", v:"v-cars", vLabel:"سيارات", price:145000000, status:"active", views:401, desc:"سيارة بحالة ممتازة وصيانة دورية منتظمة، بدون حوادث.", images:[]},
+  {title:"دراجة رياضية", v:"v-store", vLabel:"المتجر", price:2100000, status:"paused", views:76, desc:"دراجة هوائية بإطار خفيف ومتين، مناسبة للطرقات الجبلية.", images:[]},
 ];
 
 let adminUsers = [
@@ -439,8 +476,9 @@ function renderSellerListings(){
       <td><span class="badge ${l.status}">${statusLabel[l.status]}</span></td>
       <td>${l.views}</td>
       <td><div class="row-actions">
-        <button class="primary" onclick="toggleListing('${l.title}')">${l.status === 'active' ? 'إيقاف' : 'تفعيل'}</button>
-        <button class="danger" onclick="deleteListing('${l.title}')">حذف</button>
+        <button class="primary" onclick="openEditListing('${l.title.replace(/'/g,"\\'")}')">تعديل</button>
+        <button onclick="toggleListing('${l.title.replace(/'/g,"\\'")}')">${l.status === 'active' ? 'إيقاف' : 'تفعيل'}</button>
+        <button class="danger" onclick="deleteListing('${l.title.replace(/'/g,"\\'")}')">حذف</button>
       </div></td>
     </tr>`).join('') || `<tr><td colspan="6" style="text-align:center; color:var(--charcoal-soft); padding:26px;">ما في إعلانات بهالقسم</td></tr>`;
 }
@@ -458,6 +496,82 @@ function deleteListing(title){
   renderSellerListings();
   showToast('🗑️ تم حذف الإعلان');
 }
+
+let editingListingTitle = null;
+let editUploadedImages = [];
+const editOverlay = document.getElementById('editOverlay');
+const editUploadZone = document.getElementById('editUploadZone');
+const editListingImagesInput = document.getElementById('editListingImages');
+const editUploadThumbs = document.getElementById('editUploadThumbs');
+const EDIT_MAX_IMAGES = 6;
+
+function openEditListing(title){
+  const item = sellerListings.find(l => l.title === title);
+  if(!item) return;
+  editingListingTitle = title;
+  document.getElementById('editTitle').value = item.title;
+  document.getElementById('editPrice').value = item.price;
+  document.getElementById('editDesc').value = item.desc || '';
+  editUploadedImages = Array.isArray(item.images) ? [...item.images] : [];
+  renderEditThumbs();
+  editOverlay.classList.add('open');
+}
+function closeEditModal(){
+  editOverlay.classList.remove('open');
+  editingListingTitle = null;
+}
+function renderEditThumbs(){
+  editUploadThumbs.innerHTML = editUploadedImages.map((src, i) =>
+    `<div class="upload-thumb"><img src="${src}" alt="صورة الإعلان"><button type="button" class="remove-thumb" onclick="removeEditImage(${i})">✕</button></div>`
+  ).join('');
+  editUploadZone.style.display = editUploadedImages.length >= EDIT_MAX_IMAGES ? 'none' : '';
+}
+function removeEditImage(i){
+  editUploadedImages.splice(i, 1);
+  renderEditThumbs();
+}
+function addEditFiles(files){
+  const remaining = EDIT_MAX_IMAGES - editUploadedImages.length;
+  Array.from(files).slice(0, remaining).forEach(file => {
+    if(!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      editUploadedImages.push(e.target.result);
+      renderEditThumbs();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+editUploadZone.addEventListener('click', () => editListingImagesInput.click());
+editListingImagesInput.addEventListener('change', e => {
+  addEditFiles(e.target.files);
+  editListingImagesInput.value = '';
+});
+editUploadZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  editUploadZone.classList.add('dragover');
+});
+editUploadZone.addEventListener('dragleave', () => editUploadZone.classList.remove('dragover'));
+editUploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  editUploadZone.classList.remove('dragover');
+  addEditFiles(e.dataTransfer.files);
+});
+document.getElementById('closeEditModal').addEventListener('click', closeEditModal);
+editOverlay.addEventListener('click', e => { if(e.target === editOverlay) closeEditModal(); });
+document.getElementById('editForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const item = sellerListings.find(l => l.title === editingListingTitle);
+  if(!item) return;
+  item.title = document.getElementById('editTitle').value.trim() || item.title;
+  const newPrice = parseInt(document.getElementById('editPrice').value.replace(/[^\d]/g, ''), 10);
+  item.price = isNaN(newPrice) ? item.price : newPrice;
+  item.desc = document.getElementById('editDesc').value;
+  item.images = editUploadedImages;
+  renderSellerListings();
+  closeEditModal();
+  showToast('✅ تم حفظ التعديلات على الإعلان');
+});
 
 function renderAdminUsers(){
   document.getElementById('adminUsersBody').innerHTML = adminUsers.map(u => `
