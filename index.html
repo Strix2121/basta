@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بسطة — كل شي، من كل حدا</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="mark">بسطة</span>
+      <span class="tag">كل شي، من كل حدا</span>
+    </div>
+    <button class="burger" id="burgerBtn">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <button data-page="home" class="active">الرئيسية</button>
+      <button data-page="store">المتجر</button>
+      <button data-page="market">سوق الاستخدام</button>
+      <button data-page="estate">عقارات</button>
+      <button data-page="cars">سيارات</button>
+    </nav>
+    <div class="header-actions">
+      <a class="sell-btn" href="basta-dashboard.html" style="background:transparent; border:1.5px solid var(--copper); color:var(--copper);">لوحة التحكم</a>
+      <button class="sell-btn" id="sellBtnHeader">بيع الآن 🛍️</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="page active" id="page-home">
+    <div class="hero" style="border-radius:0 0 26px 26px;">
+      <div class="hero-inner">
+        <h1>كل شي بتحتاجه، وكل شي بتقدر <span>تبيعه</span></h1>
+        <p class="sub">متجر، سوق استخدام، عقارات وسيارات — منصة سورية واحدة لكل الحارة</p>
+        <div class="search-bar">
+          <select id="homeSearchScope">
+            <option value="store">المتجر</option>
+            <option value="market">سوق الاستخدام</option>
+            <option value="estate">عقارات</option>
+            <option value="cars">سيارات</option>
+          </select>
+          <input type="text" placeholder="دوّر عن أي شي.. موبايل، شقة، سيارة، أثاث">
+          <button id="homeSearchBtn">دوّر</button>
+        </div>
+        <div class="chips">
+          <span class="chip">📱 إلكترونيات</span>
+          <span class="chip">🛋️ أثاث مستعمل</span>
+          <span class="chip">🏠 شقق للإيجار</span>
+          <span class="chip">🚗 سيارات دمشق</span>
+          <span class="chip">👗 أزياء</span>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><b>+12,400</b><span>إعلان فعّال</span></div>
+          <div class="stat"><b>+3,100</b><span>بائع وتاجر</span></div>
+          <div class="stat"><b>13</b><span>محافظة سورية</span></div>
+          <div class="stat"><b>+900</b><span>عقار وسيارة</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="star-divider" style="margin-top:44px;"></div>
+
+    <div class="section-head" style="margin-top:30px;">
+      <div>
+        <span class="eyebrow" style="color:var(--charcoal-soft)">أربع سوق تحت سقف واحد</span>
+        <h2>وين حابب تبدأ؟</h2>
+      </div>
+    </div>
+    <div class="vertical-grid">
+      <a class="v-card store" data-page="store"><div class="icon">🛍️</div><h3>المتجر</h3><p>منتجات جديدة من تجار موثوقين</p></a>
+      <a class="v-card market" data-page="market"><div class="icon">🤝</div><h3>سوق الاستخدام</h3><p>بيع وشراء غراض مستعملة بين الناس</p></a>
+      <a class="v-card estate" data-page="estate"><div class="icon">🏠</div><h3>عقارات</h3><p>شقق، فيلات، محلات للبيع والإيجار</p></a>
+      <a class="v-card cars" data-page="cars"><div class="icon">🚗</div><h3>سيارات</h3><p>سيارات جديدة ومستعملة بكل الموديلات</p></a>
+    </div>
+
+    <div class="section-head">
+      <div><span class="eyebrow c-store">المتجر</span><h2>منتجات مميزة</h2></div>
+      <a class="more" data-page="store">شوف الكل ⟵</a>
+    </div>
+    <div class="grid" id="homeStoreGrid"></div>
+
+    <div class="section-head">
+      <div><span class="eyebrow c-market">سوق الاستخدام</span><h2>أحدث إعلانات الناس</h2></div>
+      <a class="more" data-page="market">شوف الكل ⟵</a>
+    </div>
+    <div class="grid" id="homeMarketGrid"></div>
+
+    <div class="section-head">
+      <div><span class="eyebrow c-estate">عقارات</span><h2>عقارات مختارة</h2></div>
+      <a class="more" data-page="estate">شوف الكل ⟵</a>
+    </div>
+    <div class="grid" id="homeEstateGrid"></div>
+
+    <div class="section-head">
+      <div><span class="eyebrow c-cars">سيارات</span><h2>سيارات للبيع</h2></div>
+      <a class="more" data-page="cars">شوف الكل ⟵</a>
+    </div>
+    <div class="grid" id="homeCarsGrid"></div>
+
+    <div class="star-divider" style="margin-top:50px;"></div>
+  </section>
+
+  <section class="page" id="page-store">
+    <div class="page-hero">
+      <span class="eyebrow c-store">المتجر الإلكتروني</span>
+      <h2>تسوق منتجات جديدة</h2>
+      <p>منتجات من تجار ومحلات موثوقة، توصيل لكل المحافظات</p>
+    </div>
+    <div class="filters">
+      <select id="storeCategory">
+        <option value="">كل الأقسام</option>
+        <option>إلكترونيات</option>
+        <option>أزياء</option>
+        <option>منزل ومطبخ</option>
+        <option>جمال وعناية</option>
+        <option>أطفال</option>
+        <option>رياضة</option>
+      </select>
+      <select id="storeSort">
+        <option value="">ترتيب حسب</option>
+        <option value="low">السعر: من الأقل للأعلى</option>
+        <option value="high">السعر: من الأعلى للأقل</option>
+      </select>
+      <input type="text" id="storeSearch" placeholder="دوّر عن منتج...">
+    </div>
+    <p class="result-count" id="storeCount"></p>
+    <div class="grid" id="storeGrid"></div>
+  </section>
+
+  <section class="page" id="page-market">
+    <div class="page-hero">
+      <span class="eyebrow c-market">سوق الاستخدام</span>
+      <h2>بيع وشراء من الناس مباشرة</h2>
+      <p>إعلانات مباشرة من مستخدمين، بلا وسيط — تواصل مع البائع مباشرة</p>
+    </div>
+    <div class="filters">
+      <select id="marketCategory">
+        <option value="">كل الأقسام</option>
+        <option>أثاث</option>
+        <option>أجهزة كهربائية</option>
+        <option>ملابس</option>
+        <option>موبايلات</option>
+        <option>أدوات منزلية</option>
+      </select>
+      <select id="marketCity">
+        <option value="">كل المحافظات</option>
+        <option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option>
+      </select>
+      <input type="text" id="marketSearch" placeholder="دوّر عن غرض مستعمل...">
+    </div>
+    <p class="result-count" id="marketCount"></p>
+    <div class="grid" id="marketGrid"></div>
+  </section>
+
+  <section class="page" id="page-estate">
+    <div class="page-hero">
+      <span class="eyebrow c-estate">عقارات</span>
+      <h2>شقق، فيلات، محلات وأراضي</h2>
+      <p>للبيع أو للإيجار، بكل المحافظات السورية</p>
+    </div>
+    <div class="filters">
+      <select id="estateType">
+        <option value="">كل الأنواع</option>
+        <option>شقة</option><option>فيلا</option><option>محل تجاري</option><option>أرض</option>
+      </select>
+      <select id="estatePurpose">
+        <option value="">للبيع أو للإيجار</option>
+        <option>للبيع</option><option>للإيجار</option>
+      </select>
+      <select id="estateCity">
+        <option value="">كل المحافظات</option>
+        <option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option>
+      </select>
+      <input type="text" id="estateSearch" placeholder="دوّر عن حي أو منطقة...">
+    </div>
+    <p class="result-count" id="estateCount"></p>
+    <div class="grid" id="estateGrid"></div>
+  </section>
+
+  <section class="page" id="page-cars">
+    <div class="page-hero">
+      <span class="eyebrow c-cars">سيارات</span>
+      <h2>سيارات جديدة ومستعملة</h2>
+      <p>كل الماركات والموديلات، بكل المحافظات</p>
+    </div>
+    <div class="filters">
+      <select id="carsBrand">
+        <option value="">كل الماركات</option>
+        <option>كيا</option><option>هيونداي</option><option>تويوتا</option><option>مرسيدس</option>
+        <option>بي إم دبليو</option><option>سكودا</option>
+      </select>
+      <select id="carsCity">
+        <option value="">كل المحافظات</option>
+        <option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option>
+      </select>
+      <select id="carsSort">
+        <option value="">ترتيب حسب</option>
+        <option value="low">السعر: من الأقل للأعلى</option>
+        <option value="high">السعر: من الأعلى للأقل</option>
+      </select>
+      <input type="text" id="carsSearch" placeholder="دوّر عن موديل...">
+    </div>
+    <p class="result-count" id="carsCount"></p>
+    <div class="grid" id="carsGrid"></div>
+  </section>
+
+</main>
+
+<button class="float-sell" id="sellBtnFloat">➕ بيع الآن</button>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo"><span class="mark">بسطة</span></div>
+      <p class="about">منصة سورية توصل البائع بالمشتري، سواء كنت تاجر عندك متجر، أو حدا حابب يبيع غراضه المستعملة، أو دلال عقارات وسيارات. كلنا على نفس البسطة.</p>
+    </div>
+    <div>
+      <h5>الأقسام</h5>
+      <ul>
+        <li>المتجر</li><li>سوق الاستخدام</li><li>عقارات</li><li>سيارات</li>
+      </ul>
+    </div>
+    <div>
+      <h5>المحافظات</h5>
+      <ul>
+        <li>دمشق</li><li>ريف دمشق</li><li>حلب</li><li>حمص</li><li>حماة</li><li>اللاذقية</li><li>طرطوس</li><li>إدلب</li><li>درعا</li><li>القنيطرة</li><li>دير الزور</li><li>الرقة</li><li>الحسكة</li>
+      </ul>
+    </div>
+    <div>
+      <h5>عن بسطة</h5>
+      <ul>
+        <li>من نحن</li><li>تواصل معنا</li><li>الشروط والأحكام</li><li>سياسة الخصوصية</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">هاد نموذج أولي تجريبي — بسطة © 2026</div>
+</footer>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>انشر إعلانك</h3>
+      <button id="closeModal">✕</button>
+    </div>
+    <p class="hint">هاد نموذج تجريبي، الإعلان ما رح ينشر فعلياً</p>
+    <form id="adForm">
+      <div class="field">
+        <label>القسم</label>
+        <select id="adSection">
+          <option value="store">منتج بالمتجر</option>
+          <option value="market">غرض مستعمل</option>
+          <option value="estate">عقار</option>
+          <option value="cars">سيارة</option>
+        </select>
+      </div>
+      <div class="field"><label>عنوان الإعلان</label><input type="text" placeholder="مثال: آيفون 13 برو حالة ممتازة" required></div>
+      <div class="field"><label>السعر (ل.س)</label><input type="text" placeholder="مثال: 3,500,000" required></div>
+      <div class="field"><label>المحافظة</label>
+        <select>
+          <option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>صور الإعلان</label>
+        <div class="upload-zone" id="uploadZone">
+          <span class="upload-icon">📷</span>
+          <span class="upload-text">اضغط هون أو اسحب الصور حتى 6 صور</span>
+          <input type="file" id="listingImages" accept="image/*" multiple hidden>
+        </div>
+        <div class="upload-thumbs" id="uploadThumbs"></div>
+      </div>
+      <div class="field"><label>وصف الإعلان</label><textarea placeholder="اكتب تفاصيل الإعلان هون..."></textarea></div>
+      <button type="submit" class="submit">نشر الإعلان</button>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="productOverlay">
+  <div class="modal product-modal">
+    <div class="modal-head">
+      <h3 id="pmTitle">اسم المنتج</h3>
+      <button id="closeProductModal">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-gallery">
+        <div class="pm-main-image t-store" id="pmMainImage">
+          <button class="pm-nav prev" id="pmPrev">‹</button>
+          <span id="pmMainIcon"></span>
+          <button class="pm-nav next" id="pmNext">›</button>
+          <div class="pm-dots" id="pmDots"></div>
+        </div>
+        <div class="pm-thumbs" id="pmThumbs"></div>
+      </div>
+      <div class="pm-info">
+        <span class="badge store" id="pmCategory"></span>
+        <div class="pm-price" id="pmPrice"></div>
+        <div class="pm-vendor" id="pmVendor"></div>
+        <p class="pm-desc" id="pmDesc"></p>
+        <div class="pm-qty">
+          <label>الكمية</label>
+          <div class="qty-stepper">
+            <button id="qtyMinus" type="button">−</button>
+            <span id="qtyValue">1</span>
+            <button id="qtyPlus" type="button">+</button>
+          </div>
+        </div>
+        <button class="pm-add-cart" id="pmAddCart">أضف للسلة 🛒</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — بسطة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/basta-dashboard.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">بسطة <span>لوحة البائع</span></div>
+  <div class="topbar-right">
+    <a class="back-link" href="index.html">العودة للموقع ⟶</a>
+    <div class="avatar" id="avatarLetter">ب</div>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="sidebar" id="sellerSidebar">
+    <span class="group-label">البائع</span>
+    <button class="nav-item active" data-panel="s-overview">📊 نظرة عامة</button>
+    <button class="nav-item" data-panel="s-listings">🗂️ إعلاناتي ومنتجاتي</button>
+    <button class="nav-item" data-panel="s-add">➕ إضافة إعلان</button>
+    <button class="nav-item" data-panel="s-messages">💬 الرسائل</button>
+    <button class="nav-item" data-panel="s-settings">⚙️ الإعدادات</button>
+  </div>
+
+  <div class="content">
+
+    <div class="content-panel active" id="panel-s-overview">
+      <h2 class="page-title">أهلاً أبو خالد 👋</h2>
+      <p class="page-sub">هيك نظرة سريعة عن حسابك اليوم</p>
+      <div class="stats">
+        <div class="stat-card"><div class="label">إعلانات نشطة</div><div class="value">7</div><div class="delta">+2 هالأسبوع</div></div>
+        <div class="stat-card clay"><div class="label">مشاهدات هالشهر</div><div class="value">1,284</div><div class="delta">+18%</div></div>
+        <div class="stat-card stone"><div class="label">رسائل جديدة</div><div class="value">5</div><div class="delta">3 لسا ما ردّيت</div></div>
+        <div class="stat-card copper"><div class="label">مبيعات المتجر</div><div class="value">6,200,000 <span style="font-size:14px;">ل.س</span></div><div class="delta">هالشهر</div></div>
+      </div>
+      <div class="panel">
+        <h3>آخر نشاط</h3>
+        <div class="msg-item"><div class="av">📩</div><div><div class="msg-title">رسالة جديدة من سامر بخصوص "ثلاجة LG"</div><div class="msg-prev">هل السعر قابل للتفاوض؟</div></div><div class="msg-time">قبل ساعة</div></div>
+        <div class="msg-item"><div class="av">✅</div><div><div class="msg-title">تمت الموافقة على إعلان "شقة 3 غرف طابق ثالث"</div></div><div class="msg-time">قبل يوم</div></div>
+        <div class="msg-item"><div class="av">👁️</div><div><div class="msg-title">إعلان "سماعة بلوتوث JBL" وصل 200 مشاهدة</div></div><div class="msg-time">قبل يومين</div></div>
+      </div>
+    </div>
+
+    <div class="content-panel" id="panel-s-listings">
+      <h2 class="page-title">إعلاناتي ومنتجاتي</h2>
+      <p class="page-sub">إدارة كل إعلاناتك من مكان واحد</p>
+      <div class="table-toolbar">
+        <select id="sellerFilterVertical">
+          <option value="">كل الأقسام</option>
+          <option value="v-store">المتجر</option>
+          <option value="v-market">سوق الاستخدام</option>
+          <option value="v-estate">عقارات</option>
+          <option value="v-cars">سيارات</option>
+        </select>
+        <input type="text" placeholder="دوّر بإعلاناتك...">
+      </div>
+      <div class="panel" style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>الإعلان</th><th>القسم</th><th>السعر</th><th>الحالة</th><th>المشاهدات</th><th>إجراءات</th></tr></thead>
+          <tbody id="sellerListingsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-panel" id="panel-s-add">
+      <h2 class="page-title">إضافة إعلان جديد</h2>
+      <p class="page-sub">اختر القسم وعبّي البيانات</p>
+      <div class="panel">
+        <div class="section-toggle" id="addSectionToggle">
+          <button class="active" data-sec="store">🛍️ منتج بالمتجر</button>
+          <button data-sec="market">🤝 غرض مستعمل</button>
+          <button data-sec="estate">🏠 عقار</button>
+          <button data-sec="cars">🚗 سيارة</button>
+        </div>
+        <form id="addForm">
+          <div class="form-grid">
+            <div class="field full"><label>عنوان الإعلان</label><input type="text" placeholder="مثال: آيفون 13 برو حالة ممتازة" required></div>
+            <div class="field"><label>السعر (ل.س)</label><input type="text" placeholder="مثال: 3,500,000" required></div>
+            <div class="field"><label>المحافظة</label>
+              <select><option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option></select>
+            </div>
+
+            <div class="field dyn dyn-store active"><label>قسم المتجر</label>
+              <select><option>إلكترونيات</option><option>أزياء</option><option>منزل ومطبخ</option><option>جمال وعناية</option><option>أطفال</option><option>رياضة</option></select>
+            </div>
+            <div class="field dyn dyn-store active"><label>الكمية المتوفرة</label><input type="number" placeholder="مثال: 25"></div>
+
+            <div class="field dyn dyn-market"><label>قسم سوق الاستخدام</label>
+              <select><option>أثاث</option><option>أجهزة كهربائية</option><option>ملابس</option><option>موبايلات</option><option>أدوات منزلية</option></select>
+            </div>
+            <div class="field dyn dyn-market"><label>حالة الغرض</label>
+              <select><option>جديد بالكرتونة</option><option>مستعمل - ممتاز</option><option>مستعمل - جيد</option><option>يحتاج صيانة</option></select>
+            </div>
+
+            <div class="field dyn dyn-estate"><label>نوع العقار</label>
+              <select><option>شقة</option><option>فيلا</option><option>محل تجاري</option><option>أرض</option></select>
+            </div>
+            <div class="field dyn dyn-estate"><label>للبيع أو للإيجار</label><select><option>للبيع</option><option>للإيجار</option></select></div>
+            <div class="field dyn dyn-estate"><label>المساحة (م²)</label><input type="number" placeholder="مثال: 150"></div>
+            <div class="field dyn dyn-estate"><label>الحي / المنطقة</label><input type="text" placeholder="مثال: المزة"></div>
+
+            <div class="field dyn dyn-cars"><label>الماركة</label>
+              <select><option>كيا</option><option>هيونداي</option><option>تويوتا</option><option>مرسيدس</option><option>بي إم دبليو</option><option>سكودا</option></select>
+            </div>
+            <div class="field dyn dyn-cars"><label>سنة الصنع</label><input type="number" placeholder="مثال: 2019"></div>
+            <div class="field dyn dyn-cars"><label>الكيلومترات</label><input type="text" placeholder="مثال: 78,000"></div>
+            <div class="field dyn dyn-cars"><label>ناقل الحركة</label><select><option>أوتوماتيك</option><option>عادي</option></select></div>
+
+            <div class="field full">
+              <label>صور الإعلان</label>
+              <div class="upload-zone" id="uploadZone">
+                <span class="upload-icon">📷</span>
+                <span class="upload-text">اضغط هون أو اسحب الصور حتى 6 صور</span>
+                <input type="file" id="listingImages" accept="image/*" multiple hidden>
+              </div>
+              <div class="upload-thumbs" id="uploadThumbs"></div>
+            </div>
+
+            <div class="field full"><label>الوصف</label><textarea placeholder="اكتب تفاصيل الإعلان هون..."></textarea></div>
+          </div>
+          <button type="submit" class="submit-btn">نشر الإعلان</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="content-panel" id="panel-s-messages">
+      <h2 class="page-title">الرسائل</h2>
+      <p class="page-sub">تواصل المشترين معك</p>
+      <div class="panel">
+        <div class="msg-item"><div class="av">س</div><div><div class="msg-title">سامر — بخصوص "ثلاجة LG استعمال سنة"</div><div class="msg-prev">هل السعر قابل للتفاوض؟ ممكن أشوفها اليوم؟</div></div><div class="msg-time">قبل ساعة</div></div>
+        <div class="msg-item"><div class="av">ر</div><div><div class="msg-title">رهف — بخصوص "شقة 3 غرف طابق ثالث"</div><div class="msg-prev">في إمكانية معاينة نهار الجمعة؟</div></div><div class="msg-time">قبل 4 ساعات</div></div>
+        <div class="msg-item"><div class="av">ع</div><div><div class="msg-title">عدنان — بخصوص "كيا سيراتو 2019"</div><div class="msg-prev">شو آخر سعر فيها؟</div></div><div class="msg-time">أمس</div></div>
+      </div>
+    </div>
+
+    <div class="content-panel" id="panel-s-settings">
+      <h2 class="page-title">إعدادات الحساب</h2>
+      <div class="panel">
+        <div class="form-grid">
+          <div class="field"><label>الاسم</label><input type="text" value="أبو خالد"></div>
+          <div class="field"><label>رقم الهاتف</label><input type="text" value="0933 XXX XXX"></div>
+          <div class="field"><label>المحافظة</label><select><option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>إدلب</option><option>درعا</option><option>القنيطرة</option><option>دير الزور</option><option>الرقة</option><option>الحسكة</option></select></div>
+          <div class="field"><label>البريد الإلكتروني</label><input type="text" value="abukhaled@example.com"></div>
+        </div>
+        <button class="submit-btn" id="saveSettingsBtn">حفظ التعديلات</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="overlay" id="editOverlay">
+  <div class="edit-modal">
+    <div class="modal-head">
+      <h3>تعديل الإعلان</h3>
+      <button id="closeEditModal" type="button">✕</button>
+    </div>
+    <form id="editForm">
+      <div class="field"><label>عنوان الإعلان</label><input type="text" id="editTitle" required></div>
+      <div class="field"><label>السعر (ل.س)</label><input type="text" id="editPrice" required></div>
+      <div class="field"><label>الوصف</label><textarea id="editDesc"></textarea></div>
+      <div class="field">
+        <label>صور الإعلان</label>
+        <div class="upload-zone" id="editUploadZone">
+          <span class="upload-icon">📷</span>
+          <span class="upload-text">اضغط هون أو اسحب الصور حتى 6 صور</span>
+          <input type="file" id="editListingImages" accept="image/*" multiple hidden>
+        </div>
+        <div class="upload-thumbs" id="editUploadThumbs"></div>
+      </div>
+      <button type="submit" class="submit-btn" style="width:100%;">حفظ التعديلات</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/basta-dashboard.js"></script>
+</body>
+</html>

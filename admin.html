@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دخول الأدمن — بسطة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div id="loginGate">
+  <div class="login-card" id="loginCard">
+    <div class="mark">بسطة</div>
+    <div class="lock">🔒</div>
+    <h1>دخول لوحة الأدمن</h1>
+    <p class="hint">هاد القسم محمي — لموظفي بسطة فقط</p>
+    <form id="loginForm">
+      <div class="field">
+        <label>كلمة السر</label>
+        <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off" required>
+      </div>
+      <button type="submit" class="login-btn">دخول</button>
+      <p class="login-error" id="loginError">كلمة السر غير صحيحة، جرب مرة تانية</p>
+    </form>
+    <a class="back-home" href="index.html">⟵ الرجوع للموقع</a>
+    <div class="demo-note">
+      ⚠️ هاد نموذج تجريبي: كلمة السر للتجربة هي <b>basta2026</b>، ومكتوبة داخل كود الصفحة فقط للعرض.
+      بموقع حقيقي، التحقق من كلمة السر لازم يصير على سيرفر (باك-إند)، مش بكود الواجهة، وإلا أي حدا يقدر يشوفها.
+    </div>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="topbar">
+    <div class="logo">بسطة <span>لوحة الأدمن</span></div>
+    <div class="topbar-right">
+      <a class="back-link" href="index.html">العودة للموقع ⟶</a>
+      <button class="logout-link" id="logoutBtn">تسجيل خروج</button>
+      <div class="avatar">أ</div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="sidebar">
+      <span class="group-label">الأدمن</span>
+      <button class="nav-item active" data-panel="a-overview">📊 نظرة عامة</button>
+      <button class="nav-item" data-panel="a-users">👥 المستخدمون</button>
+      <button class="nav-item" data-panel="a-review">🕓 مراجعة الإعلانات</button>
+      <button class="nav-item" data-panel="a-reports">📈 التقارير</button>
+      <button class="nav-item" data-panel="a-settings">⚙️ إعدادات الموقع</button>
+    </div>
+
+    <div class="content">
+
+      <div class="content-panel active" id="panel-a-overview">
+        <h2 class="page-title">نظرة عامة على المنصة</h2>
+        <p class="page-sub">ملخص عن كل الموقع</p>
+        <div class="stats">
+          <div class="stat-card"><div class="label">إجمالي المستخدمين</div><div class="value">3,112</div><div class="delta">+64 هالأسبوع</div></div>
+          <div class="stat-card clay"><div class="label">إجمالي الإعلانات</div><div class="value">12,438</div><div class="delta">+310 هالأسبوع</div></div>
+          <div class="stat-card copper"><div class="label">قيد المراجعة</div><div class="value">27</div><div class="delta">يحتاج إجراء</div></div>
+          <div class="stat-card stone"><div class="label">بلاغات مفتوحة</div><div class="value">4</div><div class="delta">يحتاج متابعة</div></div>
+        </div>
+        <div class="panel">
+          <h3>توزيع الإعلانات حسب القسم</h3>
+          <div class="bar-row"><span class="bar-label">المتجر</span><div class="bar-track"><div class="bar-fill" style="width:70%; background:var(--teal);"></div></div><span class="bar-value">4,120</span></div>
+          <div class="bar-row"><span class="bar-label">سوق الاستخدام</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--clay);"></div></div><span class="bar-value">5,860</span></div>
+          <div class="bar-row"><span class="bar-label">عقارات</span><div class="bar-track"><div class="bar-fill" style="width:32%; background:var(--stone);"></div></div><span class="bar-value">1,340</span></div>
+          <div class="bar-row"><span class="bar-label">سيارات</span><div class="bar-track"><div class="bar-fill" style="width:20%; background:var(--copper);"></div></div><span class="bar-value">1,118</span></div>
+        </div>
+      </div>
+
+      <div class="content-panel" id="panel-a-users">
+        <h2 class="page-title">المستخدمون</h2>
+        <p class="page-sub">إدارة حسابات البائعين والمشترين</p>
+        <div class="table-toolbar">
+          <input type="text" placeholder="دوّر باسم أو رقم هاتف...">
+          <select><option value="">كل الحالات</option><option>نشط</option><option>موقوف</option></select>
+        </div>
+        <div class="panel" style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>المستخدم</th><th>تاريخ الانضمام</th><th>عدد الإعلانات</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+            <tbody id="adminUsersBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="content-panel" id="panel-a-review">
+        <h2 class="page-title">مراجعة الإعلانات</h2>
+        <p class="page-sub">إعلانات بانتظار الموافقة قبل نشرها</p>
+        <div class="panel" style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>الإعلان</th><th>القسم</th><th>البائع</th><th>السعر</th><th>إجراءات</th></tr></thead>
+            <tbody id="adminReviewBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="content-panel" id="panel-a-reports">
+        <h2 class="page-title">التقارير</h2>
+        <p class="page-sub">أداء المنصة خلال آخر 6 أشهر</p>
+        <div class="panel">
+          <h3>نمو عدد الإعلانات الجديدة شهرياً</h3>
+          <div class="bar-row"><span class="bar-label">آذار</span><div class="bar-track"><div class="bar-fill" style="width:40%; background:var(--teal);"></div></div><span class="bar-value">820</span></div>
+          <div class="bar-row"><span class="bar-label">نيسان</span><div class="bar-track"><div class="bar-fill" style="width:52%; background:var(--teal);"></div></div><span class="bar-value">1,060</span></div>
+          <div class="bar-row"><span class="bar-label">أيار</span><div class="bar-track"><div class="bar-fill" style="width:61%; background:var(--teal);"></div></div><span class="bar-value">1,240</span></div>
+          <div class="bar-row"><span class="bar-label">حزيران</span><div class="bar-track"><div class="bar-fill" style="width:75%; background:var(--teal);"></div></div><span class="bar-value">1,510</span></div>
+          <div class="bar-row"><span class="bar-label">تموز</span><div class="bar-track"><div class="bar-fill" style="width:88%; background:var(--teal);"></div></div><span class="bar-value">1,790</span></div>
+          <div class="bar-row"><span class="bar-label">آب</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--teal);"></div></div><span class="bar-value">2,030</span></div>
+        </div>
+      </div>
+
+      <div class="content-panel" id="panel-a-settings">
+        <h2 class="page-title">إعدادات الموقع</h2>
+        <div class="panel">
+          <div class="form-grid">
+            <div class="field"><label>اسم المنصة</label><input type="text" value="بسطة"></div>
+            <div class="field"><label>بريد التواصل</label><input type="text" value="support@basta.sy"></div>
+            <div class="field"><label>عمولة المتجر (%)</label><input type="text" value="5"></div>
+            <div class="field"><label>مدة عرض الإعلان (يوم)</label><input type="text" value="30"></div>
+          </div>
+          <button class="submit-btn" id="saveSiteSettingsBtn">حفظ الإعدادات</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
